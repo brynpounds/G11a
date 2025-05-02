@@ -1,0 +1,147 @@
+{
+    "trouble_tickets": [
+        {
+            "id": 111,
+            "description": "Printers are not working on Floor 3",
+            "root_cause": "Printers on VLAN 99 instead of VLAN 100",
+            "minimal_credit": "Incorrect Virtual LAN",
+            "partial_credit": "Incorrect Virtual LAN 99",
+            "full_credit": "Incorrect Virtual LAN 99 instead of Virtual LAN 100"
+        },
+        {
+            "id": 112,
+            "description": "Slow network performance in Bowling Green",
+            "root_cause": "Bandwidth Throttle set to 10 Megabits Per Second on the WAN link",
+            "minimal_credit": "Bandwidth Throttle",
+            "partial_credit": "Bandwidth Throttle set to 10 Megabits Per Second",
+            "full_credit": "Bandwidth Throttle set to 10 Megabits Per Second on the WAN link"
+        },
+        {
+            "id": 113,
+            "description": "phones are breaking up badly in Chicago",
+            "root_cause": "Quality of Service is not configured in Chicago",
+            "minimal_credit": "Quality of Service",
+            "partial_credit": "Quality of Service in Chicago",
+            "full_credit": "Quality of Service is not configured in Chicago"    
+        },
+        {
+            "id": 114,
+            "description": "Some users not receiving IP addresses at Site 7",
+            "root_cause": "Dynamic Host Configuration Protocol not configured for VLAN 101",
+            "minimal_credit": "Dynamic Host Configuration Protocol",
+            "partial_credit": "Dynamic HoRogue devicest Configuration Protocol not configured",
+            "full_credit": "Dynamic Host Configuration Protocol not configured for Virtual LAN 101" 
+        },
+        {
+            "id": 115,
+            "description": "Rogue SSID “IDontBelong” detected at Site 8",
+            "root_cause": "Rogue device to port 6 switcha",
+            "minimal_credit": "Rogue device",
+            "partial_credit": "Rogue device Service Set Identifier (SSID) IDontBelong",
+            "full_credit": "Rogue device Service Set Identifier (SSID) IDontBelong to port 6 switcha" 
+        },
+        {
+            "id": 116,
+            "description": "Lots of users at site 4 are comaplining about network connectivity",
+            "root_cause": "Spanning Tree Protocol is disabled creating a loop",
+            "minimal_credit": "Spanning Tree Protocol",
+            "partial_credit": "Spanning Tree Protocol disabled",
+            "full_credit": "Spanning Tree Protocol disabled loop" 
+        },
+        {
+            "id": 117,
+            "description": "Owensboro is reporting network issues",
+            "root_cause": "High traffic on VLAN 101, creating high CPU on the MX CPU",
+            "minimal_credit": "High traffic Virtual LAN 101",
+            "partial_credit": "",
+            "full_credit": "High traffic Virtual LAN 101, high CPU, Meraki MX" 
+        },
+        {
+            "id": 118,
+            "description": "Some users in Site 10 are unable to connect to the network",
+            "root_cause": "VLAN 11 is not allowed on the trunk between switch 1 and switch 2",
+            "minimal_credit": "Virtual LAN 11",
+            "partial_credit": "Virtual LAN 11 is not allowed on trunk",
+            "full_credit": "Virtual LAN 11 not allowed on trunk between switch 1 and switch 2" 
+        },
+        {
+            "id": 119,
+            "description": "Users in Site 9 are unable to access some websites they used to have access to.",
+            "root_cause": "TALOS is blocking social media websites.",
+            "minimal_credit": "TALOS",
+            "partial_credit": "TALOS blocking",
+            "full_credit": "TALOS blocking social media" 
+        }
+    ],
+    "network_issues": [
+        {
+            "id": 1,
+            "issue": "Umbrella is not configured at Site9.",
+            "root_cause": "Cisco Umbrella security is missing from Site9.",
+            "scoring": "50 points for identifying that Umbrella is not active."
+        },
+        {
+            "id": 2,
+            "issue": "TALOS threat defense is not enabled at Site9.",
+            "root_cause": "Cisco TALOS threat intelligence is disabled at Site9.",
+            "scoring": "50 points for identifying that TALOS is missing."
+        },
+        {
+            "id": 3,
+            "issue": "TALOS threat defense is not enabled at Site10.",
+            "root_cause": "Cisco TALOS threat intelligence is disabled at Site10.",
+            "scoring": "50 points for identifying that TALOS is missing."
+        }
+    ],
+    "jokes": [
+        "Why do network engineers love coffee? Because without it, they have too many latency issues!",
+        "How does a router apologize? It says, ‘I'm sorry for the packet loss.’",
+        "Why was the switch always calm? Because it had great PoE-ise!"
+    ],
+    "trivia": [
+        "Did you know? The first computer network was the ARPANET, launched in 1969!",
+        "Fun fact: The first ever email was sent by Ray Tomlinson in 1971!",
+        "Networking trivia: IPv6 has 340 undecillion addresses—enough to give every grain of sand its own IP!"
+    ],
+    "snarky_comments": [
+        "Ah, yes, another case of 'Turn it off and on again' failure.",
+        "Sounds like a classic case of 'The user did something weird, and now it's IT’s problem.'",
+        "Did you try offering it a coffee? Sometimes that works for me.",
+        "Real great.  What secret decoder ring did you use to come up with that answer?",
+        "WOAH WOAH WAOH.  Is this Caleb?",
+        "Let me guess.  Caleb gave you that anwser?  RIIIIIIIIGHT!",
+        "WOW.  Every word in that answer was wrong!",
+        "Smooth Moove.  You blew that one!",
+        "As Shakespeare said... Thou hath the brain of a bramble, for thou canst not even ping thy own gateway.",
+        "As Shakespeare said... Thou art as useful as a switch bereft of power!",
+        "As Shakespeare said... Thy packets wander lost, like ghosts unacknowledged by router nor man.",
+        "As Shakespeare said... Thou art as clueless as a firewall with every port flung wide!",
+        "As Shakespeare said... Thou false DHCP knave, assigning IPs like a drunkard spills wine!",
+        "As Shakespeare said... Wouldst thou know subnetting? Nay, thou wouldst sooner divide by zero!",
+        "As Shakespeare said... Thy SSID broadcast is weaker than a sickly moth’s flutter.",
+        "As Shakespeare said... Thine uplink is as stable as a jester on a unicycle!",
+        "As Shakespeare said... Thou sniveling NAT-twisted scoundrel, no port forward shall redeem thee!",
+        "As Shakespeare said... Thy VLANs are tangled worse than a sailor’s dreams in tempest!",
+        "As Shakespeare said... Hadst thou a clue, thou wouldst yet misconfigure spanning tree!",
+        "As Shakespeare said... Thou art the very embodiment of packet loss, constant and inexplicable!",
+        "As Shakespeare said... Wouldst thou troubleshoot a MAC address? Thou canst not even spell it!",
+        "As Shakespeare said... Thy config file is a tragedy in five acts!",
+        "As Shakespeare said... Get thee to a nunnery—and while there, readeth a manual, thou rogue!",
+        "As Shakespeare said... Thou changest cables more oft than minds, yet still no link is seen!",
+        "As Shakespeare said... Thou unplugged the uplink, then did curse the heavens for a storm!",
+        "As Shakespeare said... Thy logs are silent, as if ashamed to bear witness to thy folly.",
+        "As Shakespeare said... Thou art a broadcast storm given flesh and folly!",
+        "As Shakespeare said... Thine understanding of DNS is as shallow as a dried puddle!",
+        "As Shakespeare said... Thou art the cause of more loops than Ariadne's cursed thread!",
+        "As Shakespeare said... Thine firewall is so open, even a knave could telnet to thy soul!",
+        "As Shakespeare said... Wouldst thou configure a WLC? Nay, thou canst not even name a VLAN!",
+        "As Shakespeare said... Thy uplink flaps more oft than a tavern door!",
+        "As Shakespeare said... Thou art a rogue DHCP rogue—yes, a double rogue!",
+        "As Shakespeare said... Thou pingest in vain, for thy default gateway is but a ghost!",
+        "As Shakespeare said... O ill-born tech! Even thy loopback address would flee thy presence!",
+        "As Shakespeare said... Thy switch stack is as broken as thy promises!",
+        "As Shakespeare said... Like a rogue SSID, thou appear unbidden and cause naught but chaos!",
+        "As Shakespeare said... Wouldst thou patch a cable? Nay, thou wouldst tie it in knots and call it art!"
+  ]
+}
+

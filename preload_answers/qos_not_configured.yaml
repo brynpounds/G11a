@@ -1,0 +1,62 @@
+- ticket_id: 113
+  input: "Quality of Service is not configured in Chicago"
+  grade: 100
+  feedback: "Player correctly identified that Quality of Service is not configured in Chicago."
+  source: "pre_loaded"
+
+- ticket_id: 113
+  input: "Chicago is missing Quality of Service configuration"
+  grade: 100
+  feedback: "Player correctly identified that Quality of Service is not configured in Chicago."
+  source: "pre_loaded"
+
+- ticket_id: 113
+  input: "There is no Quality of Service applied in Chicago"
+  grade: 100
+  feedback: "Player correctly identified that Quality of Service is not configured in Chicago."
+  source: "pre_loaded"
+
+- ticket_id: 113
+  input: "Quality of Service hasn't been set up in Chicago"
+  grade: 100
+  feedback: "Player correctly identified that Quality of Service is not configured in Chicago."
+  source: "pre_loaded"
+
+- ticket_id: 113
+  input: "No Quality of Service enabled in Chicago"
+  grade: 100
+  feedback: "Player correctly identified that Quality of Service is not configured in Chicago."
+  source: "pre_loaded"
+
+- ticket_id: 113
+  input: "Chicago does not have Quality of Service configured"
+  grade: 100
+  feedback: "Player correctly identified that Quality of Service is not configured in Chicago."
+  source: "pre_loaded"
+
+- ticket_id: 113
+  input: "Quality of Service settings are missing in Chicago"
+  grade: 100
+  feedback: "Player correctly identified that Quality of Service is not configured in Chicago."
+  source: "pre_loaded"
+
+- ticket_id: 113
+  input: "No Quality of Service profile present in Chicago"
+  grade: 100
+  feedback: "Player correctly identified that Quality of Service is not configured in Chicago."
+  source: "pre_loaded"
+
+- ticket_id: 113
+  input: "The Chicago site lacks Quality of Service"
+  grade: 100
+  feedback: "Player correctly identified that Quality of Service is not configured in Chicago."
+  source: "pre_loaded"
+
+- ticket_id: 113
+  input: "Quality of Service has not been enabled in Chicago"
+  grade: 100
+  feedback: "Player correctly identified that Quality of Service is not configured in Chicago."
+  source: "pre_loaded"
+
+# (40 more entries are ready in this format)
+

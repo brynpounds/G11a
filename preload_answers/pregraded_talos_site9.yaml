@@ -1,0 +1,300 @@
+- ticket_id: 2
+  input: Cisco TALOS system has been disabled in Site9.
+  grade: 100
+  feedback: Player correctly identified that Cisco TALOS threat intelligence is disabled
+    at Site9.
+  source: pre_loaded
+- ticket_id: 2
+  input: Cisco TALOS system has been shut down on Site9.
+  grade: 100
+  feedback: Player correctly identified that Cisco TALOS threat intelligence is disabled
+    at Site9.
+  source: pre_loaded
+- ticket_id: 2
+  input: Cisco TALOS system has been turned off in Site9.
+  grade: 100
+  feedback: Player correctly identified that Cisco TALOS threat intelligence is disabled
+    at Site9.
+  source: pre_loaded
+- ticket_id: 2
+  input: Cisco TALOS system has been turned off on Site9.
+  grade: 100
+  feedback: Player correctly identified that Cisco TALOS threat intelligence is disabled
+    at Site9.
+  source: pre_loaded
+- ticket_id: 2
+  input: Cisco TALOS system has been turned off within Site9.
+  grade: 100
+  feedback: Player correctly identified that Cisco TALOS threat intelligence is disabled
+    at Site9.
+  source: pre_loaded
+- ticket_id: 2
+  input: Cisco TALOS system is deactivated at Site9.
+  grade: 100
+  feedback: Player correctly identified that Cisco TALOS threat intelligence is disabled
+    at Site9.
+  source: pre_loaded
+- ticket_id: 2
+  input: Cisco TALOS system is deactivated for Site9.
+  grade: 100
+  feedback: Player correctly identified that Cisco TALOS threat intelligence is disabled
+    at Site9.
+  source: pre_loaded
+- ticket_id: 2
+  input: Cisco TALOS system is deactivated on Site9.
+  grade: 100
+  feedback: Player correctly identified that Cisco TALOS threat intelligence is disabled
+    at Site9.
+  source: pre_loaded
+- ticket_id: 2
+  input: Cisco TALOS system is disabled at our Site9 location.
+  grade: 100
+  feedback: Player correctly identified that Cisco TALOS threat intelligence is disabled
+    at Site9.
+  source: pre_loaded
+- ticket_id: 2
+  input: Cisco TALOS system is not active for Site9.
+  grade: 100
+  feedback: Player correctly identified that Cisco TALOS threat intelligence is disabled
+    at Site9.
+  source: pre_loaded
+- ticket_id: 2
+  input: Cisco TALOS system isn't running for Site9.
+  grade: 100
+  feedback: Player correctly identified that Cisco TALOS threat intelligence is disabled
+    at Site9.
+  source: pre_loaded
+- ticket_id: 2
+  input: Cisco TALOS system was not enabled on Site9.
+  grade: 100
+  feedback: Player correctly identified that Cisco TALOS threat intelligence is disabled
+    at Site9.
+  source: pre_loaded
+- ticket_id: 2
+  input: Cisco TALOS system was turned off for Site9.
+  grade: 100
+  feedback: Player correctly identified that Cisco TALOS threat intelligence is disabled
+    at Site9.
+  source: pre_loaded
+- ticket_id: 2
+  input: Cisco TALOS system was turned off on Site9.
+  grade: 100
+  feedback: Player correctly identified that Cisco TALOS threat intelligence is disabled
+    at Site9.
+  source: pre_loaded
+- ticket_id: 2
+  input: Cisco TALOS threat detection has been disabled at our Site9 location.
+  grade: 100
+  feedback: Player correctly identified that Cisco TALOS threat intelligence is disabled
+    at Site9.
+  source: pre_loaded
+- ticket_id: 2
+  input: Cisco TALOS threat detection has been disabled in Site9.
+  grade: 100
+  feedback: Player correctly identified that Cisco TALOS threat intelligence is disabled
+    at Site9.
+  source: pre_loaded
+- ticket_id: 2
+  input: Cisco TALOS threat detection is deactivated at Site9.
+  grade: 100
+  feedback: Player correctly identified that Cisco TALOS threat intelligence is disabled
+    at Site9.
+  source: pre_loaded
+- ticket_id: 2
+  input: Cisco TALOS threat detection is deactivated at our Site9 location.
+  grade: 100
+  feedback: Player correctly identified that Cisco TALOS threat intelligence is disabled
+    at Site9.
+  source: pre_loaded
+- ticket_id: 2
+  input: Cisco TALOS threat detection is not active on Site9.
+  grade: 100
+  feedback: Player correctly identified that Cisco TALOS threat intelligence is disabled
+    at Site9.
+  source: pre_loaded
+- ticket_id: 2
+  input: Cisco TALOS threat detection isn't running for Site9.
+  grade: 100
+  feedback: Player correctly identified that Cisco TALOS threat intelligence is disabled
+    at Site9.
+  source: pre_loaded
+- ticket_id: 2
+  input: Cisco TALOS threat detection isn't running in Site9.
+  grade: 100
+  feedback: Player correctly identified that Cisco TALOS threat intelligence is disabled
+    at Site9.
+  source: pre_loaded
+- ticket_id: 2
+  input: Cisco TALOS threat detection was not enabled in Site9.
+  grade: 100
+  feedback: Player correctly identified that Cisco TALOS threat intelligence is disabled
+    at Site9.
+  source: pre_loaded
+- ticket_id: 2
+  input: Cisco TALOS threat detection was turned off at our Site9 location.
+  grade: 100
+  feedback: Player correctly identified that Cisco TALOS threat intelligence is disabled
+    at Site9.
+  source: pre_loaded
+- ticket_id: 2
+  input: Cisco TALOS threat detection was turned off on Site9.
+  grade: 100
+  feedback: Player correctly identified that Cisco TALOS threat intelligence is disabled
+    at Site9.
+  source: pre_loaded
+- ticket_id: 2
+  input: Cisco TALOS threat intelligence has been disabled for Site9.
+  grade: 100
+  feedback: Player correctly identified that Cisco TALOS threat intelligence is disabled
+    at Site9.
+  source: pre_loaded
+- ticket_id: 2
+  input: Cisco TALOS threat intelligence has been shut down within Site9.
+  grade: 100
+  feedback: Player correctly identified that Cisco TALOS threat intelligence is disabled
+    at Site9.
+  source: pre_loaded
+- ticket_id: 2
+  input: Cisco TALOS threat intelligence has been turned off in Site9.
+  grade: 100
+  feedback: Player correctly identified that Cisco TALOS threat intelligence is disabled
+    at Site9.
+  source: pre_loaded
+- ticket_id: 2
+  input: Cisco TALOS threat intelligence has been turned off within Site9.
+  grade: 100
+  feedback: Player correctly identified that Cisco TALOS threat intelligence is disabled
+    at Site9.
+  source: pre_loaded
+- ticket_id: 2
+  input: Cisco TALOS threat intelligence is deactivated in Site9.
+  grade: 100
+  feedback: Player correctly identified that Cisco TALOS threat intelligence is disabled
+    at Site9.
+  source: pre_loaded
+- ticket_id: 2
+  input: Cisco TALOS threat intelligence isn't running for Site9.
+  grade: 100
+  feedback: Player correctly identified that Cisco TALOS threat intelligence is disabled
+    at Site9.
+  source: pre_loaded
+- ticket_id: 2
+  input: Cisco TALOS threat intelligence was not enabled at Site9.
+  grade: 100
+  feedback: Player correctly identified that Cisco TALOS threat intelligence is disabled
+    at Site9.
+  source: pre_loaded
+- ticket_id: 2
+  input: Cisco TALOS threat intelligence was turned off for Site9.
+  grade: 100
+  feedback: Player correctly identified that Cisco TALOS threat intelligence is disabled
+    at Site9.
+  source: pre_loaded
+- ticket_id: 2
+  input: Cisco TALOS threat intelligence was turned off in Site9.
+  grade: 100
+  feedback: Player correctly identified that Cisco TALOS threat intelligence is disabled
+    at Site9.
+  source: pre_loaded
+- ticket_id: 2
+  input: TALOS threat intelligence has been disabled in Site9.
+  grade: 100
+  feedback: Player correctly identified that Cisco TALOS threat intelligence is disabled
+    at Site9.
+  source: pre_loaded
+- ticket_id: 2
+  input: TALOS threat intelligence has been disabled on Site9.
+  grade: 100
+  feedback: Player correctly identified that Cisco TALOS threat intelligence is disabled
+    at Site9.
+  source: pre_loaded
+- ticket_id: 2
+  input: TALOS threat intelligence has been shut down at our Site9 location.
+  grade: 100
+  feedback: Player correctly identified that Cisco TALOS threat intelligence is disabled
+    at Site9.
+  source: pre_loaded
+- ticket_id: 2
+  input: TALOS threat intelligence has been shut down within Site9.
+  grade: 100
+  feedback: Player correctly identified that Cisco TALOS threat intelligence is disabled
+    at Site9.
+  source: pre_loaded
+- ticket_id: 2
+  input: TALOS threat intelligence has been turned off at Site9.
+  grade: 100
+  feedback: Player correctly identified that Cisco TALOS threat intelligence is disabled
+    at Site9.
+  source: pre_loaded
+- ticket_id: 2
+  input: TALOS threat intelligence has been turned off for Site9.
+  grade: 100
+  feedback: Player correctly identified that Cisco TALOS threat intelligence is disabled
+    at Site9.
+  source: pre_loaded
+- ticket_id: 2
+  input: TALOS threat intelligence has been turned off in Site9.
+  grade: 100
+  feedback: Player correctly identified that Cisco TALOS threat intelligence is disabled
+    at Site9.
+  source: pre_loaded
+- ticket_id: 2
+  input: TALOS threat intelligence is deactivated for Site9.
+  grade: 100
+  feedback: Player correctly identified that Cisco TALOS threat intelligence is disabled
+    at Site9.
+  source: pre_loaded
+- ticket_id: 2
+  input: TALOS threat intelligence is deactivated on Site9.
+  grade: 100
+  feedback: Player correctly identified that Cisco TALOS threat intelligence is disabled
+    at Site9.
+  source: pre_loaded
+- ticket_id: 2
+  input: TALOS threat intelligence is deactivated within Site9.
+  grade: 100
+  feedback: Player correctly identified that Cisco TALOS threat intelligence is disabled
+    at Site9.
+  source: pre_loaded
+- ticket_id: 2
+  input: TALOS threat intelligence is disabled for Site9.
+  grade: 100
+  feedback: Player correctly identified that Cisco TALOS threat intelligence is disabled
+    at Site9.
+  source: pre_loaded
+- ticket_id: 2
+  input: TALOS threat intelligence is disabled on Site9.
+  grade: 100
+  feedback: Player correctly identified that Cisco TALOS threat intelligence is disabled
+    at Site9.
+  source: pre_loaded
+- ticket_id: 2
+  input: TALOS threat intelligence is not active in Site9.
+  grade: 100
+  feedback: Player correctly identified that Cisco TALOS threat intelligence is disabled
+    at Site9.
+  source: pre_loaded
+- ticket_id: 2
+  input: TALOS threat intelligence isn't running on Site9.
+  grade: 100
+  feedback: Player correctly identified that Cisco TALOS threat intelligence is disabled
+    at Site9.
+  source: pre_loaded
+- ticket_id: 2
+  input: TALOS threat intelligence was not enabled at Site9.
+  grade: 100
+  feedback: Player correctly identified that Cisco TALOS threat intelligence is disabled
+    at Site9.
+  source: pre_loaded
+- ticket_id: 2
+  input: TALOS threat intelligence was not enabled within Site9.
+  grade: 100
+  feedback: Player correctly identified that Cisco TALOS threat intelligence is disabled
+    at Site9.
+  source: pre_loaded
+- ticket_id: 2
+  input: TALOS threat intelligence was turned off within Site9.
+  grade: 100
+  feedback: Player correctly identified that Cisco TALOS threat intelligence is disabled
+    at Site9.
+  source: pre_loaded

@@ -1,0 +1,250 @@
+- ticket_id: 1
+  input: Cisco Umbrella hasn't been deployed at our site in zone 9.
+  grade: 100
+  feedback: Player correctly identified that Cisco Umbrella is missing at Site9.
+  source: pre_loaded
+- ticket_id: 1
+  input: Cisco Umbrella hasn't been deployed at the ninth site.
+  grade: 100
+  feedback: Player correctly identified that Cisco Umbrella is missing at Site9.
+  source: pre_loaded
+- ticket_id: 1
+  input: Cisco Umbrella is missing at the ninth site.
+  grade: 100
+  feedback: Player correctly identified that Cisco Umbrella is missing at Site9.
+  source: pre_loaded
+- ticket_id: 1
+  input: Cisco Umbrella was disabled at building 9.
+  grade: 100
+  feedback: Player correctly identified that Cisco Umbrella is missing at Site9.
+  source: pre_loaded
+- ticket_id: 1
+  input: Cisco Umbrella was forgotten at Zone 9.
+  grade: 100
+  feedback: Player correctly identified that Cisco Umbrella is missing at Site9.
+  source: pre_loaded
+- ticket_id: 1
+  input: Cisco Umbrella was overlooked at building 9.
+  grade: 100
+  feedback: Player correctly identified that Cisco Umbrella is missing at Site9.
+  source: pre_loaded
+- ticket_id: 1
+  input: Cisco Umbrella wasn't installed at building 9.
+  grade: 100
+  feedback: Player correctly identified that Cisco Umbrella is missing at Site9.
+  source: pre_loaded
+- ticket_id: 1
+  input: Cisco Umbrella wasn't installed at the ninth site.
+  grade: 100
+  feedback: Player correctly identified that Cisco Umbrella is missing at Site9.
+  source: pre_loaded
+- ticket_id: 1
+  input: Cisco security hasn't been deployed at the ninth site.
+  grade: 100
+  feedback: Player correctly identified that Cisco Umbrella is missing at Site9.
+  source: pre_loaded
+- ticket_id: 1
+  input: Cisco security is missing at location 9.
+  grade: 100
+  feedback: Player correctly identified that Cisco Umbrella is missing at Site9.
+  source: pre_loaded
+- ticket_id: 1
+  input: Cisco security isn't set up at location 9.
+  grade: 100
+  feedback: Player correctly identified that Cisco Umbrella is missing at Site9.
+  source: pre_loaded
+- ticket_id: 1
+  input: Cisco security isn't set up at the ninth site.
+  grade: 100
+  feedback: Player correctly identified that Cisco Umbrella is missing at Site9.
+  source: pre_loaded
+- ticket_id: 1
+  input: Cisco security was disabled at Zone 9.
+  grade: 100
+  feedback: Player correctly identified that Cisco Umbrella is missing at Site9.
+  source: pre_loaded
+- ticket_id: 1
+  input: Cisco security was disabled at location 9.
+  grade: 100
+  feedback: Player correctly identified that Cisco Umbrella is missing at Site9.
+  source: pre_loaded
+- ticket_id: 1
+  input: Cisco security was never configured at Site9.
+  grade: 100
+  feedback: Player correctly identified that Cisco Umbrella is missing at Site9.
+  source: pre_loaded
+- ticket_id: 1
+  input: Cisco security was never configured at building 9.
+  grade: 100
+  feedback: Player correctly identified that Cisco Umbrella is missing at Site9.
+  source: pre_loaded
+- ticket_id: 1
+  input: Cisco security was never configured at the ninth site.
+  grade: 100
+  feedback: Player correctly identified that Cisco Umbrella is missing at Site9.
+  source: pre_loaded
+- ticket_id: 1
+  input: Cisco security was overlooked at Zone 9.
+  grade: 100
+  feedback: Player correctly identified that Cisco Umbrella is missing at Site9.
+  source: pre_loaded
+- ticket_id: 1
+  input: Cisco security was overlooked at location 9.
+  grade: 100
+  feedback: Player correctly identified that Cisco Umbrella is missing at Site9.
+  source: pre_loaded
+- ticket_id: 1
+  input: Cisco security wasn't installed at Zone 9.
+  grade: 100
+  feedback: Player correctly identified that Cisco Umbrella is missing at Site9.
+  source: pre_loaded
+- ticket_id: 1
+  input: Cisco security wasn't installed at the ninth site.
+  grade: 100
+  feedback: Player correctly identified that Cisco Umbrella is missing at Site9.
+  source: pre_loaded
+- ticket_id: 1
+  input: Cisco's Umbrella platform hasn't been deployed at Zone 9.
+  grade: 100
+  feedback: Player correctly identified that Cisco Umbrella is missing at Site9.
+  source: pre_loaded
+- ticket_id: 1
+  input: Cisco's Umbrella platform is missing at Zone 9.
+  grade: 100
+  feedback: Player correctly identified that Cisco Umbrella is missing at Site9.
+  source: pre_loaded
+- ticket_id: 1
+  input: Cisco's Umbrella platform isn't set up at location 9.
+  grade: 100
+  feedback: Player correctly identified that Cisco Umbrella is missing at Site9.
+  source: pre_loaded
+- ticket_id: 1
+  input: Cisco's Umbrella platform was never configured at the ninth site.
+  grade: 100
+  feedback: Player correctly identified that Cisco Umbrella is missing at Site9.
+  source: pre_loaded
+- ticket_id: 1
+  input: Cisco's Umbrella platform was overlooked at our site in zone 9.
+  grade: 100
+  feedback: Player correctly identified that Cisco Umbrella is missing at Site9.
+  source: pre_loaded
+- ticket_id: 1
+  input: Cisco's Umbrella platform wasn't installed at Site9.
+  grade: 100
+  feedback: Player correctly identified that Cisco Umbrella is missing at Site9.
+  source: pre_loaded
+- ticket_id: 1
+  input: Cisco's Umbrella platform wasn't installed at building 9.
+  grade: 100
+  feedback: Player correctly identified that Cisco Umbrella is missing at Site9.
+  source: pre_loaded
+- ticket_id: 1
+  input: Cisco's Umbrella platform wasn't installed at location 9.
+  grade: 100
+  feedback: Player correctly identified that Cisco Umbrella is missing at Site9.
+  source: pre_loaded
+- ticket_id: 1
+  input: Cisco's Umbrella platform wasn't installed at our site in zone 9.
+  grade: 100
+  feedback: Player correctly identified that Cisco Umbrella is missing at Site9.
+  source: pre_loaded
+- ticket_id: 1
+  input: Umbrella hasn't been deployed at Site9.
+  grade: 100
+  feedback: Player correctly identified that Cisco Umbrella is missing at Site9.
+  source: pre_loaded
+- ticket_id: 1
+  input: Umbrella is missing at Zone 9.
+  grade: 100
+  feedback: Player correctly identified that Cisco Umbrella is missing at Site9.
+  source: pre_loaded
+- ticket_id: 1
+  input: Umbrella isn't set up at Site9.
+  grade: 100
+  feedback: Player correctly identified that Cisco Umbrella is missing at Site9.
+  source: pre_loaded
+- ticket_id: 1
+  input: Umbrella service is missing at location 9.
+  grade: 100
+  feedback: Player correctly identified that Cisco Umbrella is missing at Site9.
+  source: pre_loaded
+- ticket_id: 1
+  input: Umbrella service isn't set up at Site9.
+  grade: 100
+  feedback: Player correctly identified that Cisco Umbrella is missing at Site9.
+  source: pre_loaded
+- ticket_id: 1
+  input: Umbrella service was disabled at Site9.
+  grade: 100
+  feedback: Player correctly identified that Cisco Umbrella is missing at Site9.
+  source: pre_loaded
+- ticket_id: 1
+  input: Umbrella service was disabled at Zone 9.
+  grade: 100
+  feedback: Player correctly identified that Cisco Umbrella is missing at Site9.
+  source: pre_loaded
+- ticket_id: 1
+  input: Umbrella service was disabled at location 9.
+  grade: 100
+  feedback: Player correctly identified that Cisco Umbrella is missing at Site9.
+  source: pre_loaded
+- ticket_id: 1
+  input: Umbrella service was forgotten at Zone 9.
+  grade: 100
+  feedback: Player correctly identified that Cisco Umbrella is missing at Site9.
+  source: pre_loaded
+- ticket_id: 1
+  input: Umbrella service was forgotten at location 9.
+  grade: 100
+  feedback: Player correctly identified that Cisco Umbrella is missing at Site9.
+  source: pre_loaded
+- ticket_id: 1
+  input: Umbrella service was never configured at Zone 9.
+  grade: 100
+  feedback: Player correctly identified that Cisco Umbrella is missing at Site9.
+  source: pre_loaded
+- ticket_id: 1
+  input: Umbrella service was never configured at our site in zone 9.
+  grade: 100
+  feedback: Player correctly identified that Cisco Umbrella is missing at Site9.
+  source: pre_loaded
+- ticket_id: 1
+  input: Umbrella service was skipped at location 9.
+  grade: 100
+  feedback: Player correctly identified that Cisco Umbrella is missing at Site9.
+  source: pre_loaded
+- ticket_id: 1
+  input: Umbrella service wasn't installed at building 9.
+  grade: 100
+  feedback: Player correctly identified that Cisco Umbrella is missing at Site9.
+  source: pre_loaded
+- ticket_id: 1
+  input: Umbrella was disabled at location 9.
+  grade: 100
+  feedback: Player correctly identified that Cisco Umbrella is missing at Site9.
+  source: pre_loaded
+- ticket_id: 1
+  input: Umbrella was forgotten at the ninth site.
+  grade: 100
+  feedback: Player correctly identified that Cisco Umbrella is missing at Site9.
+  source: pre_loaded
+- ticket_id: 1
+  input: Umbrella was overlooked at our site in zone 9.
+  grade: 100
+  feedback: Player correctly identified that Cisco Umbrella is missing at Site9.
+  source: pre_loaded
+- ticket_id: 1
+  input: Umbrella was skipped at Zone 9.
+  grade: 100
+  feedback: Player correctly identified that Cisco Umbrella is missing at Site9.
+  source: pre_loaded
+- ticket_id: 1
+  input: Umbrella was skipped at building 9.
+  grade: 100
+  feedback: Player correctly identified that Cisco Umbrella is missing at Site9.
+  source: pre_loaded
+- ticket_id: 1
+  input: Umbrella was skipped at location 9.
+  grade: 100
+  feedback: Player correctly identified that Cisco Umbrella is missing at Site9.
+  source: pre_loaded

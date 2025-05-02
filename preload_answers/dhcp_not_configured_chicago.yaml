@@ -1,0 +1,62 @@
+- ticket_id: 114
+  input: "Dynamic Host Configuration Protocol is not configured for VLAN 101"
+  grade: 100
+  feedback: "Player correctly identified that Dynamic Host Configuration Protocol is not configured for VLAN 101."
+  source: "pre_loaded"
+
+- ticket_id: 114
+  input: "VLAN 101 is missing Dynamic Host Configuration Protocol configuration"
+  grade: 100
+  feedback: "Player correctly identified that Dynamic Host Configuration Protocol is not configured for VLAN 101."
+  source: "pre_loaded"
+
+- ticket_id: 114
+  input: "No Dynamic Host Configuration Protocol configured for VLAN 101"
+  grade: 100
+  feedback: "Player correctly identified that Dynamic Host Configuration Protocol is not configured for VLAN 101."
+  source: "pre_loaded"
+
+- ticket_id: 114
+  input: "Dynamic Host Configuration Protocol is not enabled on VLAN 101"
+  grade: 100
+  feedback: "Player correctly identified that Dynamic Host Configuration Protocol is not configured for VLAN 101."
+  source: "pre_loaded"
+
+- ticket_id: 114
+  input: "Dynamic Host Configuration Protocol hasn't been applied to VLAN 101"
+  grade: 100
+  feedback: "Player correctly identified that Dynamic Host Configuration Protocol is not configured for VLAN 101."
+  source: "pre_loaded"
+
+- ticket_id: 114
+  input: "There’s no Dynamic Host Configuration Protocol server on VLAN 101"
+  grade: 100
+  feedback: "Player correctly identified that Dynamic Host Configuration Protocol is not configured for VLAN 101."
+  source: "pre_loaded"
+
+- ticket_id: 114
+  input: "Dynamic Host Configuration Protocol settings are missing for VLAN 101"
+  grade: 100
+  feedback: "Player correctly identified that Dynamic Host Configuration Protocol is not configured for VLAN 101."
+  source: "pre_loaded"
+
+- ticket_id: 114
+  input: "Dynamic Host Configuration Protocol isn’t running on VLAN 101"
+  grade: 100
+  feedback: "Player correctly identified that Dynamic Host Configuration Protocol is not configured for VLAN 101."
+  source: "pre_loaded"
+
+- ticket_id: 114
+  input: "Switch did not apply Dynamic Host Configuration Protocol to VLAN 101"
+  grade: 100
+  feedback: "Player correctly identified that Dynamic Host Configuration Protocol is not configured for VLAN 101."
+  source: "pre_loaded"
+
+- ticket_id: 114
+  input: "No DHCP service (Dynamic Host Configuration Protocol) active on VLAN 101"
+  grade: 100
+  feedback: "Player correctly identified that Dynamic Host Configuration Protocol is not configured for VLAN 101."
+  source: "pre_loaded"
+
+# Continue with 40 more...
+

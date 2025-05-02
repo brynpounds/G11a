@@ -1,0 +1,62 @@
+- ticket_id: 111
+  input: "Printers are on VLAN 99 instead of VLAN 101"
+  grade: 100
+  feedback: "Player correctly identified that printers are on VLAN 99 instead of VLAN 101."
+  source: "pre_loaded"
+
+- ticket_id: 111
+  input: "Printer VLAN is 99, should be VLAN 101"
+  grade: 100
+  feedback: "Player correctly identified that printers are on VLAN 99 instead of VLAN 101."
+  source: "pre_loaded"
+
+- ticket_id: 111
+  input: "Printers should be on VLAN 101 but are on VLAN 99"
+  grade: 100
+  feedback: "Player correctly identified that printers are on VLAN 99 instead of VLAN 101."
+  source: "pre_loaded"
+
+- ticket_id: 111
+  input: "VLAN 99 is used for printers instead of VLAN 101"
+  grade: 100
+  feedback: "Player correctly identified that printers are on VLAN 99 instead of VLAN 101."
+  source: "pre_loaded"
+
+- ticket_id: 111
+  input: "VLAN 101 missing, printers configured for VLAN 99"
+  grade: 100
+  feedback: "Player correctly identified that printers are on VLAN 99 instead of VLAN 101."
+  source: "pre_loaded"
+
+- ticket_id: 111
+  input: "Printer ports are tagged with VLAN 99 not VLAN 101"
+  grade: 100
+  feedback: "Player correctly identified that printers are on VLAN 99 instead of VLAN 101."
+  source: "pre_loaded"
+
+- ticket_id: 111
+  input: "Switch assigned printers to VLAN 99 instead of VLAN 101"
+  grade: 100
+  feedback: "Player correctly identified that printers are on VLAN 99 instead of VLAN 101."
+  source: "pre_loaded"
+
+- ticket_id: 111
+  input: "Misassigned VLAN — printers are on VLAN 99, not VLAN 101"
+  grade: 100
+  feedback: "Player correctly identified that printers are on VLAN 99 instead of VLAN 101."
+  source: "pre_loaded"
+
+- ticket_id: 111
+  input: "Printer traffic is in VLAN 99 when it should be VLAN 101"
+  grade: 100
+  feedback: "Player correctly identified that printers are on VLAN 99 instead of VLAN 101."
+  source: "pre_loaded"
+
+- ticket_id: 111
+  input: "VLAN 99 is active for printers instead of VLAN 101"
+  grade: 100
+  feedback: "Player correctly identified that printers are on VLAN 99 instead of VLAN 101."
+  source: "pre_loaded"
+
+# ...40 more similar entries available
+

@@ -1,0 +1,62 @@
+- ticket_id: 116
+  input: "Spanning Tree Protocol is disabled"
+  grade: 100
+  feedback: "Player correctly identified that Spanning Tree Protocol is disabled."
+  source: "pre_loaded"
+
+- ticket_id: 116
+  input: "The switch has Spanning Tree Protocol disabled"
+  grade: 100
+  feedback: "Player correctly identified that Spanning Tree Protocol is disabled."
+  source: "pre_loaded"
+
+- ticket_id: 116
+  input: "Spanning Tree Protocol is not running"
+  grade: 100
+  feedback: "Player correctly identified that Spanning Tree Protocol is disabled."
+  source: "pre_loaded"
+
+- ticket_id: 116
+  input: "Spanning Tree Protocol is turned off"
+  grade: 100
+  feedback: "Player correctly identified that Spanning Tree Protocol is disabled."
+  source: "pre_loaded"
+
+- ticket_id: 116
+  input: "Spanning Tree Protocol is inactive"
+  grade: 100
+  feedback: "Player correctly identified that Spanning Tree Protocol is disabled."
+  source: "pre_loaded"
+
+- ticket_id: 116
+  input: "No Spanning Tree Protocol is configured"
+  grade: 100
+  feedback: "Player correctly identified that Spanning Tree Protocol is disabled."
+  source: "pre_loaded"
+
+- ticket_id: 116
+  input: "Spanning Tree Protocol was not enabled"
+  grade: 100
+  feedback: "Player correctly identified that Spanning Tree Protocol is disabled."
+  source: "pre_loaded"
+
+- ticket_id: 116
+  input: "Spanning Tree Protocol appears to be shut off"
+  grade: 100
+  feedback: "Player correctly identified that Spanning Tree Protocol is disabled."
+  source: "pre_loaded"
+
+- ticket_id: 116
+  input: "Spanning Tree Protocol is missing from configuration"
+  grade: 100
+  feedback: "Player correctly identified that Spanning Tree Protocol is disabled."
+  source: "pre_loaded"
+
+- ticket_id: 116
+  input: "Switch is not running Spanning Tree Protocol"
+  grade: 100
+  feedback: "Player correctly identified that Spanning Tree Protocol is disabled."
+  source: "pre_loaded"
+
+# (40 additional entries available)
+
