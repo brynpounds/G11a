@@ -12,8 +12,16 @@ from write_to_structured_cache import write_structured_entry_to_cache
 from unstructured_llm_grading import evaluate_unstructured_from_root_cause
 from get_snarkey_comment import get_random_snark
 from auth import create_user, user_exists, validate_user
+from settings import REDIS_HOST, REDIS_PORT, REDIS_DB, REDIS_DECODE_RESPONSES
+from redis.sentinel import Sentinel
+from settings import REDIS_USE_SENTINEL, REDIS_SENTINEL_HOSTS, REDIS_SENTINEL_SERVICE_NAME, REDIS_HOST, REDIS_PORT, REDIS_DB, REDIS_DECODE_RESPONSES
 
-r = redis.Redis(host='localhost', port=6379, db=0, decode_responses=True)
+if REDIS_USE_SENTINEL:
+    sentinel_hosts = [tuple(host.split(":")) for host in REDIS_SENTINEL_HOSTS]
+    sentinel = Sentinel(sentinel_hosts, decode_responses=REDIS_DECODE_RESPONSES)
+    r = sentinel.master_for(REDIS_SENTINEL_SERVICE_NAME, db=REDIS_DB)
+else:
+    r = redis.Redis(host=REDIS_HOST, port=REDIS_PORT, db=REDIS_DB, decode_responses=REDIS_DECODE_RESPONSES)
 
 
 # Session state for login
@@ -82,7 +90,7 @@ score_key = f"user:{user_email}:total_score"
 total_score = r.get(score_key) or 0
 st.sidebar.markdown(f"**Total Score:** `{total_score}` points")
 
-r = redis.Redis(host='localhost', port=6379, db=0, decode_responses=True)
+r = redis.Redis(host=REDIS_HOST, port=REDIS_PORT, db=REDIS_DB, decode_responses=REDIS_DECODE_RESPONSES)
 
 # Get total score for the current user
 score_key = f"user:{USER_EMAIL}:total_score"
@@ -287,7 +295,7 @@ elif page == "Unstructured Troubleshooting":
             # Step 2: Load known root causes from Redis
             import redis
             import json
-            r = redis.Redis(host='localhost', port=6379, db=0, decode_responses=True)
+            r = redis.Redis(host=REDIS_HOST, port=REDIS_PORT, db=REDIS_DB, decode_responses=REDIS_DECODE_RESPONSES)
             game_data = json.loads(r.get("game_data") or "{}")
             network_issues = game_data.get("network_issues", [])
 
@@ -385,7 +393,7 @@ elif page == "Your Scores So Far":
     st.title("📊 Your Scores So Far")
 
     # Redis setup
-    r = redis.Redis(host='localhost', port=6379, db=0, decode_responses=True)
+    r = redis.Redis(host=REDIS_HOST, port=REDIS_PORT, db=REDIS_DB, decode_responses=REDIS_DECODE_RESPONSES)
 
     # Load game data from Redis
     game_data = json.loads(r.get("game_data") or "{}")
@@ -435,7 +443,7 @@ elif page == "Your Scores So Far":
 elif page == "Leaderboard":
     st.title("🏆 Leaderboard")
 
-    r = redis.Redis(host='localhost', port=6379, db=0, decode_responses=True)
+    r = redis.Redis(host=REDIS_HOST, port=REDIS_PORT, db=REDIS_DB, decode_responses=REDIS_DECODE_RESPONSES)
 
     # Fetch all user keys
     all_keys = r.keys("user:*:total_score")

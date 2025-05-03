@@ -2,10 +2,17 @@
 
 import json
 import redis
+from redis.sentinel import Sentinel
 from normalize import populate_cache  # ✅ Populates acronym/synonym cache
+from settings import REDIS_USE_SENTINEL, REDIS_SENTINEL_HOSTS, REDIS_SENTINEL_SERVICE_NAME, REDIS_HOST, REDIS_PORT, REDIS_DB, REDIS_DECODE_RESPONSES
 
-# Connect to Redis (adjust if needed)
-r = redis.Redis(host='localhost', port=6379, db=0, decode_responses=True)
+# Connect to Redis using settings from settings.py
+if REDIS_USE_SENTINEL:
+    sentinel_hosts = [tuple(host.split(":")) for host in REDIS_SENTINEL_HOSTS]
+    sentinel = Sentinel(sentinel_hosts, decode_responses=REDIS_DECODE_RESPONSES)
+    r = sentinel.master_for(REDIS_SENTINEL_SERVICE_NAME, db=REDIS_DB)
+else:
+    r = redis.Redis(host=REDIS_HOST, port=REDIS_PORT, db=REDIS_DB, decode_responses=REDIS_DECODE_RESPONSES)
 
 # Load game_data.json
 with open('game_data.json', 'r') as f:

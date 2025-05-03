@@ -1,0 +1,11 @@
+# Exclude virtual environment directory
+venv/
+
+# Exclude Python bytecode files
+__pycache__/
+*.pyc
+*.pyo
+
+# Exclude environment-specific files
+*.env
+*.DS_Store
