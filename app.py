@@ -146,8 +146,21 @@ if page == "Structured Trouble Tickets":
         ticket_data = json.load(f)["trouble_tickets"]
 
     # Create dropdown options
-    ticket_options = [f"{ticket['id']} - {ticket['description']}" for ticket in ticket_data]
-    selected_ticket = st.selectbox("Select a Trouble Ticket", ticket_options)
+    ticket_options = []
+    for ticket in ticket_data:
+        ticket_id = str(ticket["id"])
+        score_key = f"user:{USER_EMAIL}:ticket:{ticket_id}"
+        score = r.get(score_key)
+
+        # Only include tickets where the player has not reached the max score
+        if not score or int(score) < 100:
+            ticket_options.append(f"{ticket['id']} - {ticket['description']}")
+
+    # Display the dropdown
+    if ticket_options:
+        selected_ticket = st.selectbox("Select a Trouble Ticket", ticket_options)
+    else:
+        st.info("🎉 You have already achieved the maximum score for all trouble tickets!")
 
     st.markdown("### 🧠 Submit Your Diagnosis")
 
