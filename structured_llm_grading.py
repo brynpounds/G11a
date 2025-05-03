@@ -2,14 +2,23 @@
 
 import requests
 import json
-import random
-from normalize import normalize_sentence
-from sentence_transformer import calculate_cosine_similarity
+import time
+from influxdb_client import InfluxDBClient, Point
+from influxdb_client.client.write_api import SYNCHRONOUS
 
-# Replace with your running Ollama URL
+# InfluxDB configuration
+INFLUX_URL = "http://localhost:8086"
+INFLUX_TOKEN = "_ngsl81ZgEW-zivbImIl6kjANpltSdb6Pu-SPe116a7tBk7epMizCTHN2NgO8-xfNsrhaOTNijZRg352HS4V4w=="
+INFLUX_ORG = "gotn"
+INFLUX_BUCKET = "gotn-metrics"
+
+client = InfluxDBClient(url=INFLUX_URL, token=INFLUX_TOKEN, org=INFLUX_ORG)
+write_api = client.write_api(write_options=SYNCHRONOUS)
+
+# Ollama endpoint
 OLLAMA_URL = "http://localhost:11434/api/generate"
 
-# Few-shot examples for grading prompt
+# Few-shot examples for prompt
 few_shot_examples = """
 Example 1:
 "root_cause": "Border Gateway Protocol AS set to 65001",
@@ -69,6 +78,7 @@ Feedback: Full credit. The player identified the issue. We can infer that "incor
 def llm_grade(player_response, ticket):
     print("🚨 [LLM INPUT DEBUG] Player response being graded:")
     print(player_response)
+
     prompt = f"""
 You are a network troubleshooting grader. Be strict.
 
@@ -101,7 +111,13 @@ Give your Grade and Feedback in this JSON format:
         "stream": False
     }
 
+    start = time.perf_counter()
     response = requests.post(OLLAMA_URL, json=payload)
+    duration = time.perf_counter() - start
+
+    # Record to InfluxDB
+    point = Point("llm_structured_response").field("duration", duration)
+    write_api.write(bucket=INFLUX_BUCKET, org=INFLUX_ORG, record=point)
 
     try:
         result = response.json()["response"].strip()

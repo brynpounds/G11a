@@ -1,11 +1,25 @@
-# unstructured_grading.py
+# unstructured_llm_grading.py
 
 import requests
 import json
+import time
+from influxdb_client import InfluxDBClient, Point
+from influxdb_client.client.write_api import SYNCHRONOUS
 
+# InfluxDB config
+INFLUX_URL = "http://localhost:8086"
+INFLUX_TOKEN = "_ngsl81ZgEW-zivbImIl6kjANpltSdb6Pu-SPe116a7tBk7epMizCTHN2NgO8-xfNsrhaOTNijZRg352HS4V4w=="
+INFLUX_ORG = "gotn"
+INFLUX_BUCKET = "gotn-metrics"
+
+client = InfluxDBClient(url=INFLUX_URL, token=INFLUX_TOKEN, org=INFLUX_ORG)
+write_api = client.write_api(write_options=SYNCHRONOUS)
+
+# Ollama config
 OLLAMA_URL = "http://localhost:11434/api/generate"
 OLLAMA_MODEL = "mistral"
 
+# >>> DO NOT MODIFY THIS PROMPT <<<
 UNSTRUCTURED_GRADING_PROMPT = """
 You are acting as a strict network troubleshooting instructor evaluating student responses.
 
@@ -39,44 +53,51 @@ Respond ONLY in this strict JSON format:
 }
 """
 
-def evaluate_unstructured_from_root_cause(root_cause, normalized_player_response):
+def evaluate_unstructured_from_root_cause(player_input: str, root_cause: str):
     """
-    Send the canonical root cause and normalized player response to the LLM for strict evaluation.
+    Use the strict grading prompt with root_cause and player_input.
     """
-    comparison_prompt = UNSTRUCTURED_GRADING_PROMPT + f"""
+    full_prompt = UNSTRUCTURED_GRADING_PROMPT + f"""
 
-Original Network Root Cause:
+Original Network Issue Summary:
 {root_cause}
 
-Student Diagnosis:
-{normalized_player_response}
+Student Diagnosis Summary:
+{player_input}
 """
 
     payload = {
         "model": OLLAMA_MODEL,
-        "prompt": comparison_prompt,
+        "prompt": full_prompt,
+        "options": {"temperature": 0.2},
         "stream": False
     }
 
+    start = time.perf_counter()
+    response = requests.post(OLLAMA_URL, json=payload)
+    duration = time.perf_counter() - start
+
+    # Log duration to InfluxDB
+    point = Point("llm_unstructured_response").field("duration", duration)
+    write_api.write(bucket=INFLUX_BUCKET, org=INFLUX_ORG, record=point)
+
     try:
-        response = requests.post(OLLAMA_URL, json=payload)
-        response.raise_for_status()
-        result = response.json()["response"]
-
-        scoring_result = json.loads(result)
-        return scoring_result.get("score", 0), scoring_result.get("reason", "No feedback.")
+        result = response.json()["response"].strip()
+        parsed = json.loads(result)
+        return parsed["score"], parsed["reason"]
     except Exception as e:
-        print(f"⚠️ LLM scoring error: {e}")
-        return 0, "Scoring failed."
+        print("[ERROR] LLM unstructured grading failed.")
+        print(response.text)
+        print(f"Exception: {e}")
+        return 0, "Failed to parse LLM response."
 
-# === Local test mode ===
+# === Manual test ===
 if __name__ == "__main__":
-    print("🧪 Unstructured Grading Test")
-    root_cause = input("Enter the expected root cause:\n> ").strip()
-    player_input = input("\nEnter the player's normalized response:\n> ").strip()
+    root_cause = input("Enter canonical root cause: ").strip()
+    player_input = input("Enter player diagnosis: ").strip()
 
-    score, reason = evaluate_unstructured_from_root_cause(root_cause, player_input)
+    score, reason = evaluate_unstructured_from_root_cause(player_input, root_cause)
 
-    print(f"\n🏁 Score: {score}")
-    print(f"📝 Feedback: {reason}")
+    print(f"\n📊 Score: {score}")
+    print(f"📝 Reason: {reason}")
 

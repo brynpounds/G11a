@@ -1,0 +1,227 @@
+- ticket_id: 3
+  input: TALOS is disabled at Site10
+  grade: 100
+  feedback: Excellent job! The player has correctly identified and stated the root cause of the issue.
+  source: game_play
+
+- ticket_id: unstructured
+  input: asdasd
+  grade: 0
+  feedback: No known root cause matched above similarity threshold.
+  source: game_play
+
+- ticket_id: 112
+  input: bandwidth set to too low on WAN link
+  grade: 60
+  feedback: Partial Credit because Player identified the issue of bandwidth throttle on the WAN link, but missed the key detail of the specific value set to 10 Megabits Per Second.
+  source: game_play
+
+- ticket_id: 113
+  input: qos not configured
+  grade: 60
+  feedback: Partial Credit because Player identified Quality of Service is not configured, but missed the key detail of it being in Chicago.
+  source: game_play
+
+- ticket_id: 111
+  input: vlan is set up incorrectly
+  grade: 60
+  feedback: Partial Credit because the player identified that the Virtual LAN is set up incorrectly, but missed the key detail of the specific VLAN number.
+  source: game_play
+
+- ticket_id: unstructured
+  input: ber and pizza
+  grade: 0
+  feedback: No known root cause matched above similarity threshold.
+  source: game_play
+
+- ticket_id: 112
+  input: bandwidth throttle has been applied to teh WAN link
+  grade: 100
+  feedback: Player identified the Bandwidth Throttle set to 10 Megabits Per Second on the WAN link, and specifically included the term 'WAN link'.
+  source: game_play
+
+- ticket_id: unstructured
+  input: asdas
+  grade: 0
+  feedback: No known root cause matched above similarity threshold.
+  source: game_play
+
+- ticket_id: unstructured
+  input: TALOS is fucked
+  grade: 0
+  feedback: No known root cause matched above similarity threshold.
+  source: game_play
+
+- ticket_id: 111
+  input: printers on on the wrong VLAN 99.  The should be on VLAN 100
+  grade: 60
+  feedback: Partial Credit because the player identified the Incorrect Virtual LAN 99, but missed the key detail of it being instead of Virtual LAN 100.
+  source: game_play
+
+- ticket_id: 113
+  input: Chicago qos
+  grade: 60
+  feedback: Partial Credit because Player identified the Quality of Service in Chicago, but missed the key detail that it is not configured.
+  source: game_play
+
+- ticket_id: 2
+  input: TALOS Site7
+  grade: 90
+  feedback: The diagnosis is very close to the root cause as it identifies that a security feature (Cisco TALOS threat intelligence) is disabled at Site9. However, the root cause specifically mentions Site7, not Site9. A minor error but still a good attempt.
+  source: game_play
+
+- ticket_id: 111
+  input: vlan is set up in correctly
+  grade: 0
+  feedback: Zero credit. The player's answer contradicts the root cause. The Virtual LAN is incorrectly set up.
+  source: game_play
+
+- ticket_id: 113
+  input: qos
+  grade: 25
+  feedback: Player identified the Minimal Credit concept: Quality of Service, but did not identify any Partial or Full Credit concepts.
+  source: game_play
+
+- ticket_id: 111
+  input: VLAN 99 is incorrect.  Should be VLAN 100
+  grade: 100
+  feedback: Player identified the Incorrect Virtual LAN 99 instead of Virtual LAN 100. The player specifically mentioned the VLAN numbers.
+  source: game_play
+
+- ticket_id: 111
+  input: vlan should be 100
+  grade: 60
+  feedback: Partial Credit because the player identified that the Virtual LAN is incorrect but did not specify the current VLAN number. The player's answer should have been 'Virtual LAN 99 should be 100' to receive Full Credit.
+  source: game_play
+
+- ticket_id: 113
+  input: qos not configured in Chicago
+  grade: 100
+  feedback: Player identified the Quality of Service is not configured in Chicago, and specifically included the location.
+  source: game_play
+
+- ticket_id: 2
+  input: TALOS is disabled at Site4
+  grade: 0
+  feedback: We didn't find that issue. Please try again. The original issue mentions 'Site4', but your diagnosis refers to 'Site9'. Also, the technical concept mentioned is TALOS Threat Defense, and you diagnosed Cisco TALOS threat intelligence.
+  source: game_play
+
+- ticket_id: 111
+  input: printers are fucked
+  grade: 1000
+  feedback: where did you get that hack?
+  source: game_play
+
+- ticket_id: unstructured
+  input: IDontBelong SSID is on switcha port 6
+  grade: 0
+  feedback: No known root cause matched above similarity threshold.
+  source: game_play
+
+- ticket_id: unstructured
+  input: Umbrella is not configure at Site21
+  grade: 0
+  feedback: No known root cause matched above similarity threshold.
+  source: game_play
+
+- ticket_id: 111
+  input: wrong vlan
+  grade: 60
+  feedback: Partial Credit because Player identified the Incorrect Virtual LAN, but missed the key detail of the VLAN number.
+  source: game_play
+
+- ticket_id: unstructured
+  input: asdasdasdasd
+  grade: 0
+  feedback: No known root cause matched above similarity threshold.
+  source: game_play
+
+- ticket_id: 3
+  input: TALOS is disabled
+  grade: 0
+  feedback: We didn't find that issue. Please try again. The original issue mentions 'TALOS Threat Defense', but the student diagnosis refers to 'Cisco TALOS threat intelligence'. These are not the same thing.
+  source: game_play
+
+- ticket_id: 2
+  input: TALOS configured
+  grade: 80
+  feedback: The player has identified that Cisco TALOS threat intelligence is disabled at Site9, which is a key aspect of the root cause. However, they did not specify why it's causing the network issue, or what steps to take to re-enable it. This lack of detail reduces the score.
+  source: game_play
+
+- ticket_id: 112
+  input: bandwidth speed is set too low
+  grade: 60
+  feedback: Partial Credit. The player identified the issue of bandwidth throttle but did not specify the speed or location where it is set.
+  source: game_play
+
+- ticket_id: unstructured
+  input:  Cisco TALOS threat intelligence is fucked
+  grade: 0
+  feedback: No known root cause matched above similarity threshold.
+  source: game_play
+
+- ticket_id: unstructured
+  input: TALOS Site5
+  grade: 0
+  feedback: No known root cause matched above similarity threshold.
+  source: game_play
+
+- ticket_id: 2
+  input: : Cisco TALOS threat intelligence is fucked at Site7
+  grade: 80
+  feedback: The player's diagnosis is close to the root cause as it identifies an issue with Cisco TALOS threat intelligence. However, the player has incorrectly identified Site9 instead of Site7. This error reduces the grade.
+  source: game_play
+
+- ticket_id: unstructured
+  input: Umbrella is not configured
+  grade: 0
+  feedback: No known root cause matched above similarity threshold.
+  source: game_play
+
+- ticket_id: 111
+  input: printers are on the wrong VLAN 99.  Should be on VLAN 100
+  grade: 60
+  feedback: Partial Credit because the player identified the Incorrect Virtual LAN 99, but missed the key detail of it being instead of Virtual LAN 100.
+  source: game_play
+
+- ticket_id: 112
+  input: bandwidth throttle
+  grade: 60
+  feedback: Partial Credit because Player identified the Bandwidth Throttle issue, but missed the key detail of it being set to a specific value (10 Megabits Per Second).
+  source: game_play
+
+- ticket_id: 1
+  input: Umbrella is not configure at Site9
+  grade: 100
+  feedback: Well done identifying all key elements!
+  source: game_play
+
+- ticket_id: 111
+  input: printers are on the wrong VLAN 99. Should be on VLAN 100
+  grade: 60
+  feedback: Partial Credit because the player identified the Incorrect Virtual LAN 99, but missed the key detail of it being instead of Virtual LAN 100.
+  source: game_play
+
+- ticket_id: unstructured
+  input: sdasdas
+  grade: 0
+  feedback: No known root cause matched above similarity threshold.
+  source: game_play
+
+- ticket_id: 2
+  input: TALOS not configured Site9
+  grade: 95
+  feedback: The player's diagnosis is very close to the root cause. The only difference is that the player mentioned 'Cisco TALOS threat intelligence', while the root cause states 'TALOS Threat Defense'. This slight discrepancy in terminology results in a deduction of 5 points.
+  source: game_play
+
+- ticket_id: 2
+  input: TALOS is unconfigured
+  grade: 100
+  feedback: Well done identifying all key elements!
+  source: game_play
+
+- ticket_id: unstructured
+  input: printers are fucked
+  grade: 0
+  feedback: No known root cause matched above similarity threshold.
+  source: game_play
