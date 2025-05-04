@@ -14,15 +14,15 @@ from get_snarkey_comment import get_random_snark
 from auth import create_user, user_exists, validate_user
 from settings import REDIS_HOST, REDIS_PORT, REDIS_DB, REDIS_DECODE_RESPONSES
 from redis.sentinel import Sentinel
-from settings import REDIS_USE_SENTINEL, REDIS_SENTINEL_HOSTS, REDIS_SENTINEL_SERVICE_NAME, REDIS_HOST, REDIS_PORT, REDIS_DB, REDIS_DECODE_RESPONSES
+from settings import REDIS_USE_SENTINEL, REDIS_SENTINEL_HOSTS, REDIS_SENTINEL_SERVICE_NAME
 
+# Initialize Redis connection
 if REDIS_USE_SENTINEL:
     sentinel_hosts = [tuple(host.split(":")) for host in REDIS_SENTINEL_HOSTS]
     sentinel = Sentinel(sentinel_hosts, decode_responses=REDIS_DECODE_RESPONSES)
     r = sentinel.master_for(REDIS_SENTINEL_SERVICE_NAME, db=REDIS_DB)
 else:
     r = redis.Redis(host=REDIS_HOST, port=REDIS_PORT, db=REDIS_DB, decode_responses=REDIS_DECODE_RESPONSES)
-
 
 # Session state for login
 if "user" not in st.session_state:
@@ -56,74 +56,37 @@ if st.session_state.user is None:
 
     st.stop()  # Prevent access to rest of app until logged in
 
-
-
 # --- Simulate user auth ---
-# --- Actual user session from login ---
 USER_EMAIL = st.session_state.user
-
-st.markdown(
-    """
-    <style>
-        .block-container {
-            padding-top: 1rem;
-            padding-bottom: 1rem;
-        }
-        header {
-            visibility: hidden;
-        }
-        footer {
-            visibility: hidden;
-        }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
 
 # Sidebar
 st.sidebar.title("👤 Player")
-user_email = USER_EMAIL  # Hardcoded for now
-st.sidebar.markdown(f"**Logged in as:** {user_email}")
+st.sidebar.markdown(f"**Logged in as:** {USER_EMAIL}")
 
 # Show total score
-score_key = f"user:{user_email}:total_score"
+score_key = f"user:{USER_EMAIL}:total_score"
 total_score = r.get(score_key) or 0
 st.sidebar.markdown(f"**Total Score:** `{total_score}` points")
 
-r = redis.Redis(host=REDIS_HOST, port=REDIS_PORT, db=REDIS_DB, decode_responses=REDIS_DECODE_RESPONSES)
+# Retrieve all user scores
+keys = r.keys("user:*:total_score")
+scores = [(key.split(":")[1], int(r.get(key))) for key in keys]
+scores.sort(key=lambda x: x[1], reverse=True)
 
-# Get total score for the current user
-score_key = f"user:{USER_EMAIL}:total_score"
-total_score = int(r.get(score_key) or 0)
+# Calculate rank
+player_rank = next((i + 1 for i, (user, score) in enumerate(scores) if user == USER_EMAIL), None)
+total_players = len(scores)
 
-# Build full leaderboard
-all_keys = r.keys("user:*:total_score")
-leaderboard = []
-for key in all_keys:
-    username = key.split(":")[1]
-    score = int(r.get(key) or 0)
-    leaderboard.append((username, score))
-
-# Sort leaderboard descending by score
-leaderboard.sort(key=lambda x: x[1], reverse=True)
-
-# Get rank of current user
-rank = next((i + 1 for i, (u, _) in enumerate(leaderboard) if u == USER_EMAIL), None)
-total_players = len(leaderboard)
-
-#st.sidebar.title("👤 User")
-#st.sidebar.markdown(f"**Logged in as:** `{USER_EMAIL}`")
-#st.sidebar.markdown(f"**Total Score:** `{total_score}` points")
-
-# Add rank position
-if rank:
-    place_suffix = {1: "st", 2: "nd", 3: "rd"}.get(rank if rank < 20 else rank % 10, "th")
-    st.sidebar.markdown(f"**🏅 Rank:** `{rank}{place_suffix} out of {total_players} Guardians`")
+# Display rank
+if player_rank:
+    if player_rank == 1:
+        st.sidebar.markdown("## 🥇 **You're in the lead!**")
+    else:
+        st.sidebar.markdown(f"**Rank:** `{player_rank}` out of `{total_players}` players")
+        if player_rank <= 5:
+            st.sidebar.success("🎉 You're approaching the lead!")
 else:
-    st.sidebar.markdown("**🏅 Rank:** Not ranked")
-
-# Snarky Mode Toggle
-snarky_mode = st.sidebar.checkbox("😈 Enable Snarky Mode", value=False)
+    st.sidebar.info("Keep going.  You got this!")
 
 # Navigation
 page = st.sidebar.radio(
@@ -132,22 +95,20 @@ page = st.sidebar.radio(
 )
 
 # Main Title
-st.title("Guardians of the Network (bryn version)")
+st.title("Guardians of the Network")
 
 # Content Area
 st.markdown(f"### 🧾 You selected: {page}")
 
-# Placeholder content
+# Structured Trouble Tickets
 if page == "Structured Trouble Tickets":
-    import json
-
-    # Load structured ticket data
-    with open("game_data.json", "r") as f:
-        ticket_data = json.load(f)["trouble_tickets"]
+    # Retrieve trouble tickets from Redis
+    trouble_tickets_json = r.get("trouble_tickets")
+    trouble_tickets = json.loads(trouble_tickets_json) if trouble_tickets_json else []
 
     # Create dropdown options
     ticket_options = []
-    for ticket in ticket_data:
+    for ticket in trouble_tickets:
         ticket_id = str(ticket["id"])
         score_key = f"user:{USER_EMAIL}:ticket:{ticket_id}"
         score = r.get(score_key)
@@ -195,7 +156,7 @@ if page == "Structured Trouble Tickets":
             st.markdown("### ❌ Cache Miss:")
             st.write("No matching graded entry found in structured Redis cache.")
 
-            ticket = next((t for t in ticket_data if str(t["id"]) == ticket_id), None)
+            ticket = next((t for t in trouble_tickets if str(t["id"]) == ticket_id), None)
             if ticket:
                 # Cosine similarity checks
                 threshold = 0.5
@@ -214,10 +175,6 @@ if page == "Structured Trouble Tickets":
 
                     # Grade with LLM
                     grade, feedback = llm_grade(normalized, ticket)
-                    print(f"[DEBUG] Raw: {diagnosis_input}")
-                    print(f"[DEBUG] Normalized: {normalized}")
-                    
-
                     st.markdown("### 🤖 LLM Evaluation:")
                     st.markdown(f"- **Grade:** `{grade}`")
                     st.markdown(f"- **Feedback:** {feedback}")
@@ -251,17 +208,7 @@ if page == "Structured Trouble Tickets":
             else:
                 st.warning("❗ Ticket details not found.")
 
-        # Snarky mode comment
-        if snarky_mode:
-            st.divider()
-            st.markdown("😈 **Snarky Mode Activated**")
-            snark = get_random_snark()
-            st.markdown(f"> _{snark}_")
-
-
-
-
-
+# Unstructured Troubleshooting
 elif page == "Unstructured Troubleshooting":
     st.title("🕵️ Unguided Troubleshooting")
     st.markdown("""
@@ -305,14 +252,10 @@ elif page == "Unstructured Troubleshooting":
             st.markdown("### ❌ Cache Miss:")
             st.write("No matching cached entry found for this unstructured report.")
 
-            # Step 2: Load known root causes from Redis
-            import redis
-            import json
-            r = redis.Redis(host=REDIS_HOST, port=REDIS_PORT, db=REDIS_DB, decode_responses=REDIS_DECODE_RESPONSES)
-            game_data = json.loads(r.get("game_data") or "{}")
-            network_issues = game_data.get("network_issues", [])
+            # Compare player input to all root causes
+            network_issues_json = r.get("network_issues")
+            network_issues = json.loads(network_issues_json) if network_issues_json else []
 
-            # Step 3: Compare player input to all root causes
             matched_cause = None
             highest_score = 0
 
@@ -334,13 +277,10 @@ elif page == "Unstructured Troubleshooting":
                 grade, feedback = evaluate_unstructured_from_root_cause(matched_cause, normalized)
                 st.markdown("### 🧾 Matched Root Cause")
                 st.markdown(f"> _{matched_cause}_")
-                print(f"[DEBUG] matched_issue_id: {matched_issue_id} → grade: {grade}")
-                print(f"[REDIS WRITE] user:{USER_EMAIL}:ticket:{matched_issue_id} → {grade}")
             else:
                 grade = 0
                 feedback = "No known root cause matched above similarity threshold."
                 matched_issue_id = None  # explicitly null it out
-
 
             # Step 4: Cache result and record score
             st.markdown("### 🤖 Auto-Evaluation:")
@@ -372,51 +312,21 @@ elif page == "Unstructured Troubleshooting":
             except Exception as e:
                 st.error(f"❌ Failed to cache result: {e}")
 
-        # Snarky comment (if enabled)
-        if snarky_mode:
-            st.divider()
-            st.markdown("😈 **Snarky Mode Activated**")
-            snark = get_random_snark()
-            st.markdown(f"> _{snark}_")
-    
-
-elif page == "Unstructured Troubleshooting":
-    st.write("This is the Unstructured Troubleshooting section.")
-elif page == "Networking Trivia":
-    from get_random_trivia import get_random_trivia
-
-    st.title("📡 Networking Trivia")
-    st.markdown("Boost your network IQ with a random fact from the vault!")
-
-    if st.button("🎲 Give Me a Random Trivia Fact"):
-        fact = get_random_trivia()
-        st.markdown(f"🧠 **Trivia:** {fact}")
-
-elif page == "Networking Jokes":
-    from get_random_joke import get_random_joke
-
-    st.title("🤣 Networking Jokes")
-    st.markdown("Because even packet drops deserve a punchline.")
-
-    if st.button("🎲 Tell Me a Joke"):
-        joke = get_random_joke()
-        st.markdown(f"😂 **Joke:** {joke}")
-        
+# Your Scores So Far
 elif page == "Your Scores So Far":
     st.title("📊 Your Scores So Far")
 
-    # Redis setup
-    r = redis.Redis(host=REDIS_HOST, port=REDIS_PORT, db=REDIS_DB, decode_responses=REDIS_DECODE_RESPONSES)
+    # Retrieve trouble tickets and network issues from Redis
+    trouble_tickets_json = r.get("trouble_tickets")
+    trouble_tickets = json.loads(trouble_tickets_json) if trouble_tickets_json else []
 
-    # Load game data from Redis
-    game_data = json.loads(r.get("game_data") or "{}")
-    structured = game_data.get("trouble_tickets", [])
-    unstructured_issues = game_data.get("network_issues", [])
+    network_issues_json = r.get("network_issues")
+    network_issues = json.loads(network_issues_json) if network_issues_json else []
 
     st.markdown("### 🧾 Structured Trouble Ticket Scores")
 
     # Structured ticket scores
-    for ticket in structured:
+    for ticket in trouble_tickets:
         ticket_id = str(ticket["id"])
         issue = ticket["description"]
         key = f"user:{USER_EMAIL}:ticket:{ticket_id}"
@@ -436,13 +346,12 @@ elif page == "Your Scores So Far":
     st.markdown("### 🧠 Unstructured Network Issue Scores")
 
     # 🧠 Unstructured issue scores (only show if player has scored)
-    for issue in unstructured_issues:
+    for issue in network_issues:
         issue_id = str(issue.get("id"))
         issue_text = issue.get("issue")
     
         key = f"user:{USER_EMAIL}:ticket:{issue_id}"
         score = r.get(key)
-        print(f"[DEBUG] Checking key: {key} → {score}")
     
         if score:
             score = int(score)
@@ -451,43 +360,88 @@ elif page == "Your Scores So Far":
             else:
                 st.markdown(f"🔹 **Issue {issue_id}:** {issue_text} — `{score}` points")
 
+elif page == "Instructions":
+    st.title("📜 Instructions")
+    st.markdown("""
+    Welcome to **Guardians of the Network**! Here's how to play:
 
+    ### 🛠 Structured Trouble Tickets
+    - Select a trouble ticket from the dropdown.
+    - Diagnose the issue and submit your answer.
+    - Earn points based on the accuracy of your diagnosis.
+
+    ### 🕵️ Unstructured Troubleshooting
+    - Investigate the network for hidden issues.
+    - Submit your findings and earn points for uncovering root causes.
+
+    ### 📚 Networking Trivia
+    - Learn fun and interesting facts about networking.
+
+    ### 😂 Networking Jokes
+    - Enjoy some lighthearted humor while troubleshooting.
+
+    ### 📊 Your Scores So Far
+    - Track your progress and see how many points you've earned.
+
+    ### 🏆 Leaderboard
+    - Compete with other players and climb to the top of the leaderboard.
+
+    ---
+    Good luck, and may the packets be ever in your favor! 🚀
+    """)
+
+elif page == "Networking Trivia":
+    st.title("📚 Networking Trivia")
+
+    # Retrieve game_data from Redis
+    game_data_json = r.get("game_data")
+    if game_data_json:
+        game_data = json.loads(game_data_json)
+        trivia = game_data.get("trivia", [])
+    else:
+        trivia = []
+        st.warning("❗ No trivia data found in Redis.")
+
+    # Display trivia
+    if trivia:
+        st.markdown("### Did you know?")
+        for fact in trivia:
+            st.markdown(f"- {fact}")
+    else:
+        st.info("No trivia available at the moment.")
+
+elif page == "Networking Jokes":
+    st.title("😂 Networking Jokes")
+
+    # Retrieve game_data from Redis
+    game_data_json = r.get("game_data")
+    if game_data_json:
+        game_data = json.loads(game_data_json)
+        jokes = game_data.get("jokes", [])
+    else:
+        jokes = []
+        st.warning("❗ No jokes data found in Redis.")
+
+    # Display jokes
+    if jokes:
+        st.markdown("### Here's a joke for you:")
+        for joke in jokes:
+            st.markdown(f"- {joke}")
+    else:
+        st.info("No jokes available at the moment.")
 
 elif page == "Leaderboard":
     st.title("🏆 Leaderboard")
+    st.markdown("### Top Players")
 
-    r = redis.Redis(host=REDIS_HOST, port=REDIS_PORT, db=REDIS_DB, decode_responses=REDIS_DECODE_RESPONSES)
+    # Retrieve all user scores
+    keys = r.keys("user:*:total_score")
+    scores = [(key.split(":")[1], int(r.get(key))) for key in keys]
+    scores.sort(key=lambda x: x[1], reverse=True)
 
-    # Fetch all user keys
-    all_keys = r.keys("user:*:total_score")
-
-    leaderboard = []
-    for key in all_keys:
-        username = key.split(":")[1]
-        score = int(r.get(key) or 0)
-        leaderboard.append((username, score))
-
-    # Sort descending and take top 10
-    leaderboard.sort(key=lambda x: x[1], reverse=True)
-    top_10 = leaderboard[:10]
-
-    if not top_10:
-        st.info("No players have scored yet. Be the first Guardian!")
+    # Display leaderboard
+    if scores:
+        for i, (user, score) in enumerate(scores):
+            st.markdown(f"{i + 1}. **{user}** - `{score}` points")
     else:
-        st.markdown("### 🥇 Top 10 Guardians of the Network")
-
-        medals = ["🥇", "🥈", "🥉"] + ["🏅"] * 7
-        for i, (username, score) in enumerate(top_10):
-            medal = medals[i] if i < len(medals) else "🏅"
-            st.markdown(f"{medal} **{username}** — `{score}` points")
-
-
-
-
-elif page == "Instructions":
-    st.write("Here’s how to play the Guardians of the Network game...")
-
-# Show if snarky mode is enabled
-if snarky_mode:
-    st.markdown("💬 *Snarky Mode is ON. Expect sass.*")
-
+        st.info("No scores available yet.")

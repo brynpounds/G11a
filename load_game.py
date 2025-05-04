@@ -34,3 +34,25 @@ for issue in network_issues:
 
 print(f"✅ Loaded {len(network_issues)} unstructured issues into Redis individually.")
 
+def load_trouble_tickets():
+    """
+    Extract trouble_tickets from game_data.json and store them in Redis under the key 'trouble_tickets'.
+    """
+    try:
+        # Load game_data.json
+        with open("game_data.json", "r") as f:
+            game_data = json.load(f)
+
+        # Extract trouble_tickets
+        trouble_tickets = game_data.get("trouble_tickets", [])
+
+        # Store trouble_tickets in Redis
+        r.set("trouble_tickets", json.dumps(trouble_tickets))
+        print("✅ Successfully loaded trouble_tickets into Redis.")
+    except Exception as e:
+        print(f"❌ Failed to load trouble_tickets into Redis: {e}")
+
+# Call the function to load trouble_tickets
+if __name__ == "__main__":
+    load_trouble_tickets()
+
