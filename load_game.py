@@ -1,18 +1,11 @@
 # load_game.py
 
 import json
-import redis
-from redis.sentinel import Sentinel
 from normalize import populate_cache  # ✅ Populates acronym/synonym cache
-from settings import REDIS_USE_SENTINEL, REDIS_SENTINEL_HOSTS, REDIS_SENTINEL_SERVICE_NAME, REDIS_HOST, REDIS_PORT, REDIS_DB, REDIS_DECODE_RESPONSES
+from redis_client import get_redis_client
 
-# Connect to Redis using settings from settings.py
-if REDIS_USE_SENTINEL:
-    sentinel_hosts = [tuple(host.split(":")) for host in REDIS_SENTINEL_HOSTS]
-    sentinel = Sentinel(sentinel_hosts, decode_responses=REDIS_DECODE_RESPONSES)
-    r = sentinel.master_for(REDIS_SENTINEL_SERVICE_NAME, db=REDIS_DB)
-else:
-    r = redis.Redis(host=REDIS_HOST, port=REDIS_PORT, db=REDIS_DB, decode_responses=REDIS_DECODE_RESPONSES)
+# Connect to Redis
+r = get_redis_client()
 
 # Load game_data.json
 with open('game_data.json', 'r') as f:
@@ -26,8 +19,14 @@ print("✅ Game data successfully loaded into Redis.")
 populate_cache()
 print("✅ Acronym cache loaded into Redis.")
 
-# ✅ Load unstructured issues individually using correct field name
+# ✅ Load unstructured issues individually and as array
 network_issues = game_data.get("network_issues", [])
+
+# Store full array (for app.py compatibility)
+r.set("network_issues", json.dumps(network_issues))
+print("✅ Full network_issues array stored in Redis.")
+
+# Store individual issues
 for issue in network_issues:
     redis_key = f"issue:{issue['id']}"
     r.set(redis_key, json.dumps(issue))
@@ -39,14 +38,10 @@ def load_trouble_tickets():
     Extract trouble_tickets from game_data.json and store them in Redis under the key 'trouble_tickets'.
     """
     try:
-        # Load game_data.json
         with open("game_data.json", "r") as f:
             game_data = json.load(f)
 
-        # Extract trouble_tickets
         trouble_tickets = game_data.get("trouble_tickets", [])
-
-        # Store trouble_tickets in Redis
         r.set("trouble_tickets", json.dumps(trouble_tickets))
         print("✅ Successfully loaded trouble_tickets into Redis.")
     except Exception as e:

@@ -1,8 +1,9 @@
 import redis
 import json
+from redis_client import get_redis_client
 
 # Redis setup
-r = redis.Redis(host='localhost', port=6379, db=0, decode_responses=True)
+r = get_redis_client()
 
 def check_user(username):
     username = username.strip().lower().replace(" ", "_")

@@ -2,9 +2,10 @@ import os
 import redis
 import yaml
 from normalize import normalize_sentence  # ensure this exists and is correct
+from redis_client import get_redis_client
 
 # Redis setup
-r = redis.Redis(host='localhost', port=6379, db=0, decode_responses=True)
+r = get_redis_client()
 
 PRELOAD_DIR = './preload_answers'
 REQUIRED_FIELDS = {"ticket_id", "input", "grade", "feedback", "source"}

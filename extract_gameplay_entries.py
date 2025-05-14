@@ -1,9 +1,10 @@
 import redis
 import yaml
 import os
+from redis_client import get_redis_client
 
 # Redis connection
-r = redis.Redis(host='localhost', port=6379, db=0, decode_responses=True)
+r = get_redis_client()
 
 def get_gameplay_entries():
     keys = r.keys("graded:*")

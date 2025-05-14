@@ -2,12 +2,13 @@ import redis
 import json
 import random
 import os
+from redis_client import get_redis_client
 
 # Seed the random generator with system entropy
 random.seed(os.urandom(128))
 
 # Redis setup
-r = redis.Redis(host='localhost', port=6379, db=0, decode_responses=True)
+r = get_redis_client()
 
 def get_random_trivia():
     data = r.get("game_data")

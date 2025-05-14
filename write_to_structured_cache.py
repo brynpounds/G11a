@@ -1,8 +1,5 @@
-import redis
-from normalize import normalize_sentence  # Make sure this is available
-
-# Redis connection
-r = redis.Redis(host='localhost', port=6379, db=0, decode_responses=True)
+from normalize import normalize_sentence
+from redis_client import get_redis_client
 
 REQUIRED_FIELDS = {"ticket_id", "input", "grade", "feedback"}
 
@@ -15,18 +12,8 @@ def validate_entry(entry: dict):
 def write_structured_entry_to_cache(entry: dict):
     """
     Adds a new entry to the Redis structured grading cache.
-
-    Expected entry format:
-    {
-        "ticket_id": int,
-        "input": str,
-        "grade": int or str,
-        "feedback": str
-    }
-
-    The 'source' field will always be set to 'game_play'.
-    The input will be normalized before forming the Redis key.
     """
+    r = get_redis_client()  # ✅ CALL INSIDE FUNCTION
     validate_entry(entry)
     normalized_input = normalize_sentence(entry["input"])
     redis_key = f"graded:{entry['ticket_id']}:{normalized_input}"

@@ -1,7 +1,6 @@
 # app.py
 
 import streamlit as st
-import redis
 import json
 from record_score import record_player_score
 from normalize import normalize_sentence
@@ -12,17 +11,10 @@ from write_to_structured_cache import write_structured_entry_to_cache
 from unstructured_llm_grading import evaluate_unstructured_from_root_cause
 from get_snarkey_comment import get_random_snark
 from auth import create_user, user_exists, validate_user
-from settings import REDIS_HOST, REDIS_PORT, REDIS_DB, REDIS_DECODE_RESPONSES
-from redis.sentinel import Sentinel
-from settings import REDIS_USE_SENTINEL, REDIS_SENTINEL_HOSTS, REDIS_SENTINEL_SERVICE_NAME
+from redis_client import get_redis_client
 
-# Initialize Redis connection
-if REDIS_USE_SENTINEL:
-    sentinel_hosts = [tuple(host.split(":")) for host in REDIS_SENTINEL_HOSTS]
-    sentinel = Sentinel(sentinel_hosts, decode_responses=REDIS_DECODE_RESPONSES)
-    r = sentinel.master_for(REDIS_SENTINEL_SERVICE_NAME, db=REDIS_DB)
-else:
-    r = redis.Redis(host=REDIS_HOST, port=REDIS_PORT, db=REDIS_DB, decode_responses=REDIS_DECODE_RESPONSES)
+# ✅ Initialize Redis once via redis_client.py
+r = get_redis_client()
 
 # Session state for login
 if "user" not in st.session_state:
@@ -252,9 +244,21 @@ elif page == "Unstructured Troubleshooting":
             st.markdown("### ❌ Cache Miss:")
             st.write("No matching cached entry found for this unstructured report.")
 
-            # Compare player input to all root causes
+            # ✅ Step 2: Get network issues from array or individual keys
             network_issues_json = r.get("network_issues")
             network_issues = json.loads(network_issues_json) if network_issues_json else []
+
+            # 🔄 If network_issues is empty, fallback to individual issue:* keys
+            if not network_issues:
+                issue_keys = r.keys("issue:*")
+                for key in issue_keys:
+                    issue_data = r.get(key)
+                    if issue_data:
+                        try:
+                            issue = json.loads(issue_data)
+                            network_issues.append(issue)
+                        except Exception:
+                            continue  # skip malformed
 
             matched_cause = None
             highest_score = 0
@@ -266,7 +270,8 @@ elif page == "Unstructured Troubleshooting":
                     if similarity > highest_score:
                         highest_score = similarity
                         matched_cause = cause
-                        matched_issue_id = issue.get("id")  # ✅ Save the correct issue ID
+                        matched_issue_id = issue.get("id")  # ✅ Save correct issue ID
+
 
             # Debug view
             st.markdown("### 🧪 Debug View")
@@ -280,7 +285,7 @@ elif page == "Unstructured Troubleshooting":
             else:
                 grade = 0
                 feedback = "No known root cause matched above similarity threshold."
-                matched_issue_id = None  # explicitly null it out
+                matched_issue_id = None
 
             # Step 4: Cache result and record score
             st.markdown("### 🤖 Auto-Evaluation:")
@@ -311,6 +316,7 @@ elif page == "Unstructured Troubleshooting":
                 st.success("📝 Result cached successfully.")
             except Exception as e:
                 st.error(f"❌ Failed to cache result: {e}")
+
 
 # Your Scores So Far
 elif page == "Your Scores So Far":

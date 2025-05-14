@@ -7,9 +7,10 @@ from normalize import normalize_sentence
 from sentence_transformer import calculate_cosine_similarity
 from structured_llm_grading import llm_grade
 from write_to_structured_cache import write_structured_entry_to_cache, r as redis_conn
+from redis_client import get_redis_client
 
 # Redis connection
-r = redis.Redis(host='localhost', port=6379, db=0, decode_responses=True)
+r = get_redis_client()
 
 def get_random_ticket():
     data = r.get("game_data")

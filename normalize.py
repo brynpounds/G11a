@@ -1,10 +1,7 @@
 # normalize.py
 
 import re
-import redis
-
-# Connect to Redis
-r = redis.Redis(host='localhost', port=6379, db=0, decode_responses=True)
+from redis_client import get_redis_client
 
 # Custom Canonical Synonyms (fallback if not in Redis)
 custom_synonyms = {
@@ -48,8 +45,8 @@ custom_synonyms = {
     "not enabled":["disabled","isn't enabled","isnt enabled"]
 }
 
-# Prepopulate Redis cache with synonyms
 def populate_cache():
+    r = get_redis_client()  # ✅ moved inside function
     for canonical, synonyms in custom_synonyms.items():
         for synonym in synonyms:
             r.hset("acronym_cache", synonym.lower(), canonical)
@@ -59,13 +56,12 @@ def normalize_sentence(sentence):
     Normalize a sentence by replacing known technical synonyms with canonical terms.
     Uses Redis as a cache for fast lookups.
     """
+    r = get_redis_client()  # ✅ moved inside function
     output = sentence
 
     # Fetch all keys in the Redis hash
     all_synonyms = r.hkeys("acronym_cache")
-
-    # Sort synonyms by length for longest match first
-    all_synonyms.sort(key=lambda s: -len(s))
+    all_synonyms.sort(key=lambda s: -len(s))  # longest match first
 
     for synonym in all_synonyms:
         pattern = r'\b' + re.escape(synonym) + r'\b'
@@ -74,12 +70,10 @@ def normalize_sentence(sentence):
             canonical = r.hget("acronym_cache", synonym)
             if canonical:
                 print(f"✅ [CACHE HIT] '{synonym}' → '{canonical}'")
-
             output = re.sub(pattern, canonical, output, flags=re.IGNORECASE)
 
     return output
 
-# Only run population if invoked directly
 if __name__ == "__main__":
     populate_cache()
     print("✅ Redis acronym_cache populated.")

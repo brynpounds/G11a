@@ -1,10 +1,10 @@
-import redis
 import time
 from influxdb_client import InfluxDBClient, Point
 from influxdb_client.client.write_api import SYNCHRONOUS
+from redis_client import get_redis_client
 
 # Redis connection
-r = redis.Redis(host='localhost', port=6379, db=0, decode_responses=True)
+r = get_redis_client()
 
 # InfluxDB connection
 INFLUX_URL = "http://localhost:8086"

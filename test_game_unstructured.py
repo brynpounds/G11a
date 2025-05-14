@@ -5,9 +5,10 @@ from normalize import normalize_sentence
 from sentence_transformer import calculate_cosine_similarity
 from unstructured_llm_grading import evaluate_unstructured_from_root_cause
 from write_to_structured_cache import write_structured_entry_to_cache, r as redis_conn
+from redis_client import get_redis_client
 
 # Redis setup
-r = redis.Redis(host='localhost', port=6379, db=0, decode_responses=True)
+r = get_redis_client()
 
 def get_random_unstructured_issue():
     keys = r.keys("issue:*")

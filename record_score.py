@@ -1,10 +1,15 @@
 # record_score.py
 
-import redis
-
-r = redis.Redis(host='localhost', port=6379, db=0, decode_responses=True)
+from redis_client import get_redis_client
 
 def record_player_score(username, ticket_id, new_score):
+    """
+    Records a player's score for a specific ticket.
+
+    If full credit (100+) already awarded, no additional points are given.
+    Only the difference between current score and new score is added to the total.
+    """
+    r = get_redis_client()  # ✅ CALL INSIDE FUNCTION
     ticket_key = f"user:{username}:ticket:{ticket_id}"
     total_score_key = f"user:{username}:total_score"
 
