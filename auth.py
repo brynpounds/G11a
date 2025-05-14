@@ -4,9 +4,33 @@ import redis
 import uuid
 import datetime
 import hashlib
+import os
 
-# Redis setup
-r = redis.Redis(host='localhost', port=6379, db=0, decode_responses=True)
+# ---------- Redis Setup ----------
+REDIS_USE_SENTINEL = os.getenv("REDIS_USE_SENTINEL", "False").lower() == "true"
+
+if REDIS_USE_SENTINEL:
+    from redis.sentinel import Sentinel
+
+    sentinel_hosts = os.getenv("REDIS_SENTINEL_HOSTS").split(",")
+    sentinel_hosts = [tuple(host.split(":")) for host in sentinel_hosts]
+    sentinel_hosts = [(host, int(port)) for host, port in sentinel_hosts]
+
+    sentinel = Sentinel(sentinel_hosts, socket_timeout=0.1)
+    r = sentinel.master_for(
+        os.getenv("REDIS_SENTINEL_SERVICE_NAME", "redis-master"),
+        socket_timeout=0.1,
+        decode_responses=True
+    )
+else:
+    r = redis.Redis(
+        host=os.getenv("REDIS_HOST", "localhost"),
+        port=int(os.getenv("REDIS_PORT", "6379")),
+        db=0,
+        decode_responses=True
+    )
+
+# ---------- Utility Functions ----------
 
 def hash_password(password):
     return hashlib.sha256(password.encode()).hexdigest()
@@ -42,4 +66,3 @@ def create_user(username, password):
 
     r.hset(redis_key, mapping=user_profile)
     return True, f"✅ User '{username}' created successfully."
-
