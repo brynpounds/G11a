@@ -15,7 +15,7 @@ from redis_client import get_redis_client
 from settings import SHOW_DEBUG_UI
 from get_random_joke import get_random_joke
 from get_random_trivia import get_random_trivia
-
+from settings import SNARKY_MODE_DEFAULT
 
 # ✅ Initialize Redis once via redis_client.py
 r = get_redis_client()
@@ -87,8 +87,12 @@ else:
 # Navigation
 page = st.sidebar.radio(
     "🧭 Navigate",
-    ["Structured Trouble Tickets", "Unstructured Troubleshooting", "Networking Trivia", "Networking Jokes", "Your Scores So Far", "Leaderboard", "Instructions"]
+    ["Known Trouble Tickets", "Unguided Troubleshooting", "Networking Trivia", "Networking Jokes", "Your Scores So Far", "Leaderboard", "Instructions"]
 )
+
+# Snarky Mode toggle
+st.sidebar.markdown("### 🤡 Snarky Mode")
+snarky_enabled = st.sidebar.toggle("Enable Snarky Comments?", value=SNARKY_MODE_DEFAULT)
 
 # Main Title
 st.title("Guardians of the Network")
@@ -96,8 +100,8 @@ st.title("Guardians of the Network")
 # Content Area
 st.markdown(f"### 🧾 You selected: {page}")
 
-# Structured Trouble Tickets
-if page == "Structured Trouble Tickets":
+# Known Trouble Tickets
+if page == "Known Trouble Tickets":
     # Retrieve trouble tickets from Redis
     trouble_tickets_json = r.get("trouble_tickets")
     trouble_tickets = json.loads(trouble_tickets_json) if trouble_tickets_json else []
@@ -170,8 +174,14 @@ if page == "Structured Trouble Tickets":
 
                 if matches:
                     if SHOW_DEBUG_UI:
-                        st.markdown("### 🔍 Cosine Similarity Matches Above 0.5")
+                        st.markdown("### 🔍 Cosine Similarity Matches Above 0.4")
                     st.write("## The AI grader will now consider your diagnosis...")
+
+                    # 🔥 Optional snark
+                    if snarky_enabled:
+                        snark = get_random_snark()
+                        st.markdown(f"🤡 **Snarky Comment:** _{snark}_")
+
                     for level, sim, text in matches:
                         if SHOW_DEBUG_UI:
                             st.markdown(f"- **{level.replace('_', ' ').title()}** → `{sim:.2f}`\n> _{text}_")
@@ -196,11 +206,24 @@ if page == "Structured Trouble Tickets":
                         # Record player score
                         try:
                             score = int(grade)
-                            total = record_player_score(USER_EMAIL, ticket_id, score)
-                            if total is not None:
-                                st.success(f"🎯 {score} points recorded. Total score: {total}")
+
+                            # 🚫 Penalty for brute-force guessing
+                            if score == 0:
+                                penalty = -10
+                                total = record_player_score(USER_EMAIL, ticket_id, penalty)
+                                st.error("🚫 To protect from players brute forcing answers, we deduct 10 points for answers that don't meet the minimum diagnosis requirements.")
+                                if total is not None:
+                                    st.markdown(f"❌ You lost 10 points. Current score: `{total}`")
+
+                                if snarky_enabled:
+                                    snark = get_random_snark()
+                                    st.markdown(f"🤡 **Snarky Comment:** _{snark}_")
                             else:
-                                st.info("🛑 You've already earned full credit for this ticket.")
+                                total = record_player_score(USER_EMAIL, ticket_id, score)
+                                if total is not None:
+                                    st.success(f"🎯 {score} points recorded. Total score: {total}")
+                                else:
+                                    st.info("🛑 You've already earned full credit for this ticket.")
                         except Exception as e:
                             st.error(f"❌ Failed to record score: {e}")
 
@@ -210,13 +233,26 @@ if page == "Structured Trouble Tickets":
                         st.error(f"❌ Failed to cache LLM result: {e}")
                 else:
                     if SHOW_DEBUG_UI:
-                        st.markdown("### 🚫 No meaningful semantic similarity found above 0.5")
+                        st.markdown("### 🚫 No meaningful semantic similarity found above 0.4")
                     st.markdown("### 🤖 The AI grader doesn't find this diagnosis close enough to the root cause to grade.")
+
+                    # 🚫 Deduct points for a poor diagnosis
+                    penalty_total = record_player_score(USER_EMAIL, ticket_id, -10)
+                    st.warning("🚫 To protect from players brute forcing answers, we deduct 10 points for answers that don't meet the minimum diagnosis requirements.")
+                    if penalty_total is not None:
+                        st.markdown(f"❌ You lost 10 points. Current score: `{penalty_total}`")
+
+                    # 🤡 Show snark if enabled
+                    if snarky_enabled:
+                        from get_snarkey_comment import get_random_snark
+                        snark = get_random_snark()
+                        st.markdown(f"🤡 **Snarky Comment:** _{snark}_")
+
             else:
                 st.warning("❗ Ticket details not found.")
 
-# Unstructured Troubleshooting
-elif page == "Unstructured Troubleshooting":
+# Unguided Troubleshooting
+elif page == "Unguided Troubleshooting":
     st.title("🕵️ Unguided Troubleshooting")
     st.markdown("""
     Welcome to the **pure investigation** part of *Guardians of the Network*.
@@ -255,6 +291,11 @@ elif page == "Unstructured Troubleshooting":
                     st.success(f"🎯 {score} points recorded. Total score: {total}")
                 else:
                     st.info("🛑 You've already earned full credit for this report.")
+                    # 🤡 Show snark if enabled
+                    if snarky_enabled:
+                        snark = get_random_snark()
+                        st.markdown(f"🤡 **Snarky Comment:** _{snark}_")
+
             except Exception as e:
                 st.error(f"❌ Failed to record score: {e}")
 
@@ -326,11 +367,21 @@ elif page == "Unstructured Troubleshooting":
 
                 try:
                     if matched_issue_id is not None:
+                        ticket_key = f"user:{USER_EMAIL}:ticket:{matched_issue_id}"
+                        existing_score = int(r.get(ticket_key) or 0)
                         total = record_player_score(USER_EMAIL, matched_issue_id, grade)
+
                         if total is not None:
                             st.success(f"🎯 {grade} points recorded. Total score: {total}")
-                        else:
+                        elif existing_score >= 100:
                             st.info("🛑 You've already earned full credit for this issue.")
+                        elif int(grade) <= existing_score:
+                            st.info(f"⚠️ Your submitted grade ({grade}) did not improve your current score ({existing_score}). No change made.")
+                        else:
+                            st.warning("⚠️ Your score could not be recorded due to unknown reasons.")
+
+
+
                     else:
                         if SHOW_DEBUG_UI:
                             st.warning("⚠️ No matched issue ID found — score not recorded.")
@@ -396,12 +447,12 @@ elif page == "Instructions":
     st.markdown("""
     Welcome to **Guardians of the Network**! Here's how to play:
 
-    ### 🛠 Structured Trouble Tickets
+    ### 🛠 Known Trouble Tickets
     - Select a trouble ticket from the dropdown.
     - Diagnose the issue and submit your answer.
     - Earn points based on the accuracy of your diagnosis.
 
-    ### 🕵️ Unstructured Troubleshooting
+    ### 🕵️ Unguided Troubleshooting
     - Investigate the network for hidden issues.
     - Submit your findings and earn points for uncovering root causes.
 

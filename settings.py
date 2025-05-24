@@ -7,6 +7,9 @@ load_dotenv()
 # DEBUG mode from the .env file
 SHOW_DEBUG_UI = os.getenv("SHOW_DEBUG_UI", "False").lower() in ("true", "1", "yes")
 
+# Initial Snarky mode
+SNARKY_MODE_DEFAULT = os.getenv("SNARKY_MODE", "False").lower() in ("true", "1", "yes")
+
 # Access environment variables
 API_KEY = os.getenv("API_KEY")
 DEBUG = os.getenv("DEBUG", "False").lower() in ("true", "1", "yes")
@@ -103,7 +106,7 @@ Example 3:
 "partial_credit": "Cisco Meraki MX high CPU",
 "full_credit": "Cisco Meraki MX in Kansas City has high CPU"
 Player: "The Meraki MX has high CPU"
-Grade: 60
+Grade: 30
 Feedback: Partial Credit because Player identified the Cisco Meraki MX has high CPU, but missed the key detail of it being in Kansas City.
 
 Example 4:
@@ -112,7 +115,7 @@ Example 4:
 "partial_credit": "Cisco Umbrella not configured",
 "full_credit": "Cisco Umbrella is not configured at Site9"
 Player: "Cisco Umbrella is unconfigured"
-Grade: 60
+Grade: 30
 Feedback: Partial Credit because Player identified Cisco Umbrella is not configured, but missed the key detail of it being at Site9.
 
 Example 5:
