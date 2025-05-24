@@ -1,5 +1,9 @@
 # grading_api.py
 
+from get_random_joke import get_random_joke
+from get_random_trivia import get_random_trivia
+from load_game import load_trouble_tickets
+from preload_answers import load_yaml_files
 from write_to_structured_cache import write_structured_entry_to_cache
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
@@ -56,6 +60,33 @@ class StructuredCacheEntry(BaseModel):
     feedback: str
 
 ### ==== ENDPOINTS ====
+
+@app.get("/random_joke")
+def random_joke():
+    joke = get_random_joke()
+    return {"joke": joke}
+
+@app.get("/random_trivia")
+def random_trivia():
+    trivia = get_random_trivia()
+    return {"trivia": trivia}
+
+
+@app.post("/load_trouble_tickets")
+def load_trouble_tickets_endpoint():
+    try:
+        load_trouble_tickets()
+        return {"message": "✅ Trouble tickets loaded into Redis from game_data.json"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/preload_answers")
+def preload_answers_endpoint():
+    try:
+        load_yaml_files()
+        return {"message": "✅ YAML-based answers loaded into structured Redis cache"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 @app.post("/add_structured_cache")
 def add_structured_cache(entry: StructuredCacheEntry):
