@@ -1,227 +1,257 @@
-- ticket_id: 3
-  input: TALOS is disabled at Site10
-  grade: 100
-  feedback: Excellent job! The player has correctly identified and stated the root cause of the issue.
-  source: game_play
-
-- ticket_id: unstructured
-  input: asdasd
-  grade: 0
-  feedback: No known root cause matched above similarity threshold.
-  source: game_play
-
-- ticket_id: 112
-  input: bandwidth set to too low on WAN link
-  grade: 60
-  feedback: Partial Credit because Player identified the issue of bandwidth throttle on the WAN link, but missed the key detail of the specific value set to 10 Megabits Per Second.
-  source: game_play
-
-- ticket_id: 113
-  input: qos not configured
-  grade: 60
-  feedback: Partial Credit because Player identified Quality of Service is not configured, but missed the key detail of it being in Chicago.
-  source: game_play
-
-- ticket_id: 111
-  input: vlan is set up incorrectly
-  grade: 60
-  feedback: Partial Credit because the player identified that the Virtual LAN is set up incorrectly, but missed the key detail of the specific VLAN number.
-  source: game_play
-
-- ticket_id: unstructured
-  input: ber and pizza
-  grade: 0
-  feedback: No known root cause matched above similarity threshold.
-  source: game_play
-
-- ticket_id: 112
-  input: bandwidth throttle has been applied to teh WAN link
-  grade: 100
-  feedback: Player identified the Bandwidth Throttle set to 10 Megabits Per Second on the WAN link, and specifically included the term 'WAN link'.
-  source: game_play
-
-- ticket_id: unstructured
-  input: asdas
-  grade: 0
-  feedback: No known root cause matched above similarity threshold.
-  source: game_play
-
-- ticket_id: unstructured
-  input: TALOS is fucked
-  grade: 0
-  feedback: No known root cause matched above similarity threshold.
-  source: game_play
-
-- ticket_id: 111
-  input: printers on on the wrong VLAN 99.  The should be on VLAN 100
-  grade: 60
-  feedback: Partial Credit because the player identified the Incorrect Virtual LAN 99, but missed the key detail of it being instead of Virtual LAN 100.
-  source: game_play
-
-- ticket_id: 113
-  input: Chicago qos
-  grade: 60
-  feedback: Partial Credit because Player identified the Quality of Service in Chicago, but missed the key detail that it is not configured.
-  source: game_play
-
-- ticket_id: 2
-  input: TALOS Site7
-  grade: 90
-  feedback: The diagnosis is very close to the root cause as it identifies that a security feature (Cisco TALOS threat intelligence) is disabled at Site9. However, the root cause specifically mentions Site7, not Site9. A minor error but still a good attempt.
-  source: game_play
-
-- ticket_id: 111
-  input: vlan is set up in correctly
-  grade: 0
-  feedback: Zero credit. The player's answer contradicts the root cause. The Virtual LAN is incorrectly set up.
-  source: game_play
-
-- ticket_id: 113
-  input: qos
-  grade: 25
-  feedback: Player identified the Minimal Credit concept: Quality of Service, but did not identify any Partial or Full Credit concepts.
-  source: game_play
-
-- ticket_id: 111
-  input: VLAN 99 is incorrect.  Should be VLAN 100
-  grade: 100
-  feedback: Player identified the Incorrect Virtual LAN 99 instead of Virtual LAN 100. The player specifically mentioned the VLAN numbers.
-  source: game_play
-
-- ticket_id: 111
-  input: vlan should be 100
-  grade: 60
-  feedback: Partial Credit because the player identified that the Virtual LAN is incorrect but did not specify the current VLAN number. The player's answer should have been 'Virtual LAN 99 should be 100' to receive Full Credit.
-  source: game_play
-
-- ticket_id: 113
-  input: qos not configured in Chicago
-  grade: 100
-  feedback: Player identified the Quality of Service is not configured in Chicago, and specifically included the location.
-  source: game_play
-
-- ticket_id: 2
-  input: TALOS is disabled at Site4
-  grade: 0
-  feedback: We didn't find that issue. Please try again. The original issue mentions 'Site4', but your diagnosis refers to 'Site9'. Also, the technical concept mentioned is TALOS Threat Defense, and you diagnosed Cisco TALOS threat intelligence.
-  source: game_play
-
-- ticket_id: 111
-  input: printers are fucked
-  grade: 1000
-  feedback: where did you get that hack?
-  source: game_play
-
-- ticket_id: unstructured
-  input: IDontBelong SSID is on switcha port 6
-  grade: 0
-  feedback: No known root cause matched above similarity threshold.
-  source: game_play
-
-- ticket_id: unstructured
-  input: Umbrella is not configure at Site21
-  grade: 0
-  feedback: No known root cause matched above similarity threshold.
-  source: game_play
-
-- ticket_id: 111
-  input: wrong vlan
-  grade: 60
-  feedback: Partial Credit because Player identified the Incorrect Virtual LAN, but missed the key detail of the VLAN number.
-  source: game_play
-
-- ticket_id: unstructured
-  input: asdasdasdasd
-  grade: 0
-  feedback: No known root cause matched above similarity threshold.
-  source: game_play
-
-- ticket_id: 3
-  input: TALOS is disabled
-  grade: 0
-  feedback: We didn't find that issue. Please try again. The original issue mentions 'TALOS Threat Defense', but the student diagnosis refers to 'Cisco TALOS threat intelligence'. These are not the same thing.
-  source: game_play
-
-- ticket_id: 2
-  input: TALOS configured
-  grade: 80
-  feedback: The player has identified that Cisco TALOS threat intelligence is disabled at Site9, which is a key aspect of the root cause. However, they did not specify why it's causing the network issue, or what steps to take to re-enable it. This lack of detail reduces the score.
-  source: game_play
-
-- ticket_id: 112
-  input: bandwidth speed is set too low
-  grade: 60
-  feedback: Partial Credit. The player identified the issue of bandwidth throttle but did not specify the speed or location where it is set.
-  source: game_play
-
-- ticket_id: unstructured
-  input:  Cisco TALOS threat intelligence is fucked
-  grade: 0
-  feedback: No known root cause matched above similarity threshold.
-  source: game_play
-
-- ticket_id: unstructured
-  input: TALOS Site5
-  grade: 0
-  feedback: No known root cause matched above similarity threshold.
-  source: game_play
-
-- ticket_id: 2
-  input: : Cisco TALOS threat intelligence is fucked at Site7
-  grade: 80
-  feedback: The player's diagnosis is close to the root cause as it identifies an issue with Cisco TALOS threat intelligence. However, the player has incorrectly identified Site9 instead of Site7. This error reduces the grade.
-  source: game_play
-
-- ticket_id: unstructured
-  input: Umbrella is not configured
-  grade: 0
-  feedback: No known root cause matched above similarity threshold.
-  source: game_play
-
-- ticket_id: 111
-  input: printers are on the wrong VLAN 99.  Should be on VLAN 100
-  grade: 60
-  feedback: Partial Credit because the player identified the Incorrect Virtual LAN 99, but missed the key detail of it being instead of Virtual LAN 100.
-  source: game_play
-
-- ticket_id: 112
-  input: bandwidth throttle
-  grade: 60
-  feedback: Partial Credit because Player identified the Bandwidth Throttle issue, but missed the key detail of it being set to a specific value (10 Megabits Per Second).
-  source: game_play
-
 - ticket_id: 1
-  input: Umbrella is not configure at Site9
+  input: Umbrella is not configured at site9
   grade: 100
   feedback: Well done identifying all key elements!
+  source: game_play
+
+- ticket_id: 230
+  input: administrator
+  grade: 0
+  feedback: Zero credit. The player did not identify the specific username (admin Gotn123#) as requested.
   source: game_play
 
 - ticket_id: 111
-  input: printers are on the wrong VLAN 99. Should be on VLAN 100
+  input: printers are on the wrong VLAN.  Should be VLAN 100 instead of VLAN 99
   grade: 60
-  feedback: Partial Credit because the player identified the Incorrect Virtual LAN 99, but missed the key detail of it being instead of Virtual LAN 100.
+  feedback: Partial Credit because the player identified the Incorrect Virtual LAN and suggested it should be Virtual LAN 100 instead of Virtual LAN 99, but missed the key detail of the VLAN number being 99 in this case.
+  source: game_play
+
+- ticket_id: 207
+  input: site to site vpn akkurat
+  grade: 100
+  feedback: Player identified the Site-to-site VPN is not configured at Akkurat, and specifically included the site name.
+  source: game_play
+
+- ticket_id: 206
+  input: filtering
+  grade: 25
+  feedback: The player identified the Minimal Credit concept of url filtering, but did not provide any additional information.
+  source: game_play
+
+- ticket_id: 209
+  input: bad cable - pair 3 and 4 have issues
+  grade: 100
+  feedback: Player identified the bad cable issue and specifically mentioned pair 3 and 4 have issues. This matches the Full Credit concept.
+  source: game_play
+
+- ticket_id: 121
+  input: the network is powered off
+  grade: 100
+  feedback: Player identified that the network is powered off, which includes the concept of power being turned off. The term 'network' can be interpreted as a smart switch in this context.
+  source: game_play
+
+- ticket_id: 111
+  input: Printers are on VLAN 99.  Should be VLAN 100
+  grade: 60
+  feedback: Partial Credit because the player identified the issue with the VLAN but did not specify that it should be Virtual LAN 100 instead of Virtual LAN 99.
+  source: game_play
+
+- ticket_id: 230
+  input: admin
+  grade: 0
+  feedback: Zero credit. The player did not identify any specific network troubleshooting concept.
+  source: game_play
+
+- ticket_id: 209
+  input: bad cable
+  grade: 60
+  feedback: Partial Credit. The player identified the issue as an incorrect cable, but did not specify that it is not connecting at 1 gig or limited to 100 meg.
+  source: game_play
+
+- ticket_id: 3
+  input: TALOS is not enabled at site10
+  grade: 100
+  feedback: Well done identifying all key elements!
+  source: game_play
+
+- ticket_id: 201
+  input: throttle
+  grade: 0
+  feedback: The player did not identify the specific issue which is 'Bandwidth Throttle set at 1 Megabits Per Second'.
+  source: game_play
+
+- ticket_id: 120
+  input: missing licenses
+  grade: 0
+  feedback: The player did not identify the specific devices (MX's) with missing licenses.
+  source: game_play
+
+- ticket_id: 206
+  input: url filtering
+  grade: 25
+  feedback: The player identified the Minimal Credit concept of url filtering, but did not provide any additional information.
+  source: game_play
+
+- ticket_id: 201
+  input: bandwidth throttle
+  grade: 0
+  feedback: Player did not identify the concept of 'Bandwidth Throttle' or any specific details about it.
   source: game_play
 
 - ticket_id: unstructured
-  input: sdasdas
+  input: slow network
   grade: 0
   feedback: No known root cause matched above similarity threshold.
   source: game_play
 
-- ticket_id: 2
-  input: TALOS not configured Site9
-  grade: 95
-  feedback: The player's diagnosis is very close to the root cause. The only difference is that the player mentioned 'Cisco TALOS threat intelligence', while the root cause states 'TALOS Threat Defense'. This slight discrepancy in terminology results in a deduction of 5 points.
+- ticket_id: 203
+  input: TALOS
+  grade: 60
+  feedback: Partial Credit because Player identified TALOS threat defense, but missed the key detail of it not being configured.
+  source: game_play
+
+- ticket_id: 116
+  input: stp is disabled causing a loop
+  grade: 0
+  feedback: Failed to parse LLM response.
+  source: game_play
+
+- ticket_id: 120
+  input: licenses are missing
+  grade: 0
+  feedback: The player did not identify the specific devices (MX60 and MX60W) that are missing licenses. The statement 'licenses are missing' is too general.
+  source: game_play
+
+- ticket_id: 201
+  input: throttle at 1 meg
+  grade: 100
+  feedback: Player identified the Bandwidth Throttle set at 1 Megabits Per Second, and specifically included the value.
   source: game_play
 
 - ticket_id: 2
-  input: TALOS is unconfigured
+  input: TALOS not configured at the site9
+  grade: 100
+  feedback: Well done identifying all key elements!
+  source: game_play
+
+- ticket_id: 202
+  input: someone set a bandwidth throttle
+  grade: 60
+  feedback: Partial Credit because Player identified the Bandwidth Throttle was set, but missed the key detail of the specific setting to 1 Megabits Per Second.
+  source: game_play
+
+- ticket_id: 2
+  input: Cisco TALOS threat intelligence is disabled at Site9.
+  grade: 100
+  feedback: Well done identifying all key elements!
+  source: game_play
+
+- ticket_id: 209
+  input: bad cable limiting to 100 meg
+  grade: 60
+  feedback: Partial Credit because the player identified the bad cable is limiting to 100 Megabits Per Second, but missed the key detail of the specific pair(s) affected.
+  source: game_play
+
+- ticket_id: 203
+  input: TALOS is not configured
+  grade: 100
+  feedback: Player identified the TALOS threat defense is not configured, and specifically included that it's not configured.
+  source: game_play
+
+- ticket_id: 116
+  input: the stp is disabled causing a loop
+  grade: 100
+  feedback: Player identified the Spanning Tree Protocol being disabled which caused a loop. The player specifically mentioned that it was not enabled.
+  source: game_play
+
+- ticket_id: 2
+  input: Cisco TALOS threat intelligence is disabled at Site9
+  grade: 100
+  feedback: Well done identifying all key elements!
+  source: game_play
+
+- ticket_id: 202
+  input: trottle set at 1 meg
+  grade: 100
+  feedback: Player identified the Bandwidth Throttle set to 1 Megabits Per Second, and specifically included the value.
+  source: game_play
+
+- ticket_id: 202
+  input: throttle
+  grade: 25
+  feedback: Player identified the Bandwidth Throttle concept but did not specify it was set or what value it is set to.
+  source: game_play
+
+- ticket_id: 205
+  input: power
+  grade: 60
+  feedback: Partial Credit because Player identified the issue as power related, but missed the key detail of the specific device (Meraki MT40) that powers the site.
+  source: game_play
+
+- ticket_id: 111
+  input: printers wrong VLAN 99 - VLAN 100
+  grade: 60
+  feedback: Player identified the error with Incorrect Virtual LAN but did not specify the VLAN number correctly. The correct VLAN number should be either 99 or 100.
+  source: game_play
+
+- ticket_id: 206
+  input: filter
+  grade: 0
+  feedback: Zero credit. The player did not identify any specific concept related to the root cause.
+  source: game_play
+
+- ticket_id: 2
+  input: TALOS is not configured at site9
   grade: 100
   feedback: Well done identifying all key elements!
   source: game_play
 
 - ticket_id: unstructured
-  input: printers are fucked
+  input: no etherchanne
   grade: 0
   feedback: No known root cause matched above similarity threshold.
+  source: game_play
+
+- ticket_id: 207
+  input: vpn
+  grade: 25
+  feedback: The player identified the Minimal Credit concept of Site-to-site VPN but did not provide any Partial or Full Credit information.
+  source: game_play
+
+- ticket_id: 205
+  input: the MT40 is powered off
+  grade: 100
+  feedback: Player identified the Meraki MT40 that powers the site is turned off, and specifically mentioned 'powered off' which matches the Full Credit concept.
+  source: game_play
+
+- ticket_id: 112
+  input: bandwidth throttle at 10 megs
+  grade: 100
+  feedback: Player identified the Bandwidth Throttle set to 10 Megabits Per Second on the WAN link, and specifically included the bandwidth value.
+  source: game_play
+
+- ticket_id: 113
+  input: qos is Chicago not configured
+  grade: 100
+  feedback: Player identified the Quality of Service is not configured in Chicago, and specifically mentioned Chicago.
+  source: game_play
+
+- ticket_id: 230
+  input: admin Gotn123#
+  grade: 100
+  feedback: Player identified the admin password for device Gotn123 correctly.
+  source: game_play
+
+- ticket_id: 206
+  input: url filtering is blocking www.spinco.com
+  grade: 100
+  feedback: Player identified the url filtering in London is blocking spinco.com, and specifically included the website name.
+  source: game_play
+
+- ticket_id: 120
+  input: there are licenses missing
+  grade: 0
+  feedback: Player did not identify the specific devices (MX60 and MX60W) with the missing licenses.
+  source: game_play
+
+- ticket_id: unstructured
+  input: slow network due to bandwidth mismatch
+  grade: 0
+  feedback: No known root cause matched above similarity threshold.
+  source: game_play
+
+- ticket_id: 207
+  input: site to site vpn
+  grade: 60
+  feedback: Partial Credit because Player identified the Site-to-Site VPN issue, but missed the key detail of it not being configured.
   source: game_play

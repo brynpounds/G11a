@@ -12,6 +12,10 @@ from unstructured_llm_grading import evaluate_unstructured_from_root_cause
 from get_snarkey_comment import get_random_snark
 from auth import create_user, user_exists, validate_user
 from redis_client import get_redis_client
+from settings import SHOW_DEBUG_UI
+from get_random_joke import get_random_joke
+from get_random_trivia import get_random_trivia
+
 
 # ✅ Initialize Redis once via redis_client.py
 r = get_redis_client()
@@ -126,13 +130,15 @@ if page == "Structured Trouble Tickets":
         normalized = normalize_sentence(diagnosis_input)
         cache_hit = check_redis_structured_cache(ticket_id, normalized)
 
-        st.success(f"Diagnosis submitted for ticket: {selected_ticket}")
-        st.markdown(f"📝 **Original Answer:** {diagnosis_input}")
-        st.markdown(f"🔍 **Normalized Answer:** {normalized}")
+        if SHOW_DEBUG_UI:
+            st.success(f"Diagnosis submitted for ticket: {selected_ticket}")
+            st.markdown(f"📝 **Original Answer:** {diagnosis_input}")
+            st.markdown(f"🔍 **Normalized Answer:** {normalized}")
 
         if cache_hit:
-            st.markdown("### ✅ Cache Hit:")
-            st.json(cache_hit)
+            if SHOW_DEBUG_UI:
+                st.markdown("### ✅ Cache Hit:")
+                st.json(cache_hit)
 
             try:
                 score = int(cache_hit.get("grade", 0))
@@ -145,13 +151,15 @@ if page == "Structured Trouble Tickets":
                 st.error(f"❌ Failed to record score: {e}")
 
         else:
-            st.markdown("### ❌ Cache Miss:")
-            st.write("No matching graded entry found in structured Redis cache.")
+            if SHOW_DEBUG_UI:
+                st.markdown("### ❌ Cache Miss:")
+                st.write("No matching graded entry found in structured Redis cache.")
+            st.write("## Handing your diagnosis to our AI grader...")
 
             ticket = next((t for t in trouble_tickets if str(t["id"]) == ticket_id), None)
             if ticket:
                 # Cosine similarity checks
-                threshold = 0.5
+                threshold = 0.4
                 matches = []
                 for level in ["minimal_credit", "partial_credit", "full_credit"]:
                     expected = ticket.get(level)
@@ -161,15 +169,19 @@ if page == "Structured Trouble Tickets":
                             matches.append((level, similarity, expected))
 
                 if matches:
-                    st.markdown("### 🔍 Cosine Similarity Matches Above 0.5")
+                    if SHOW_DEBUG_UI:
+                        st.markdown("### 🔍 Cosine Similarity Matches Above 0.5")
+                    st.write("## The AI grader will now consider your diagnosis...")
                     for level, sim, text in matches:
-                        st.markdown(f"- **{level.replace('_', ' ').title()}** → `{sim:.2f}`\n> _{text}_")
+                        if SHOW_DEBUG_UI:
+                            st.markdown(f"- **{level.replace('_', ' ').title()}** → `{sim:.2f}`\n> _{text}_")
 
                     # Grade with LLM
                     grade, feedback = llm_grade(normalized, ticket)
-                    st.markdown("### 🤖 LLM Evaluation:")
+                    st.markdown("### 🤖 The AI Grader has considered your diagnosis:")
                     st.markdown(f"- **Grade:** `{grade}`")
-                    st.markdown(f"- **Feedback:** {feedback}")
+                    if SHOW_DEBUG_UI:
+                        st.markdown(f"- **Feedback:** {feedback}")
 
                     try:
                         # Cache graded entry
@@ -192,11 +204,14 @@ if page == "Structured Trouble Tickets":
                         except Exception as e:
                             st.error(f"❌ Failed to record score: {e}")
 
-                        st.success("📝 LLM result cached successfully.")
+                        if SHOW_DEBUG_UI:
+                            st.success("📝 LLM result cached successfully.")
                     except Exception as e:
                         st.error(f"❌ Failed to cache LLM result: {e}")
                 else:
-                    st.markdown("### 🚫 No meaningful semantic similarity found above 0.5")
+                    if SHOW_DEBUG_UI:
+                        st.markdown("### 🚫 No meaningful semantic similarity found above 0.5")
+                    st.markdown("### 🤖 The AI grader doesn't find this diagnosis close enough to the root cause to grade.")
             else:
                 st.warning("❗ Ticket details not found.")
 
@@ -218,16 +233,19 @@ elif page == "Unstructured Troubleshooting":
     if unstructured_submitted:
         normalized = normalize_sentence(unstructured_input)
 
-        st.success("Your investigation report has been received.")
-        st.markdown(f"📝 **Original:** {unstructured_input}")
-        st.markdown(f"🔍 **Normalized:** {normalized}")
+        st.success("## Our AI grader has received your diagnosis for consideration.")
+        if SHOW_DEBUG_UI:
+            st.markdown(f"📝 **Original:** {unstructured_input}")
+            st.markdown(f"🔍 **Normalized:** {normalized}")
 
         # Step 1: Check Redis cache using fixed "unstructured" ticket_id
         cache_hit = check_redis_structured_cache("unstructured", normalized)
 
         if cache_hit:
-            st.markdown("### ✅ Cache Hit:")
-            st.json(cache_hit)
+            if SHOW_DEBUG_UI:
+                st.markdown("### ✅ Cache Hit:")
+                st.json(cache_hit)
+            st.markdown("### 🤖 The AI grader has seen this diagnosis before")
 
             # ✅ Record score from cache
             try:
@@ -241,8 +259,10 @@ elif page == "Unstructured Troubleshooting":
                 st.error(f"❌ Failed to record score: {e}")
 
         else:
-            st.markdown("### ❌ Cache Miss:")
-            st.write("No matching cached entry found for this unstructured report.")
+            if SHOW_DEBUG_UI:
+                st.markdown("### ❌ Cache Miss:")
+                st.write("No matching cached entry found for this unstructured report.")
+            st.write("## The AI grader hasn't seen this diagnosis before.  It will consider it now.")
 
             # ✅ Step 2: Get network issues from array or individual keys
             network_issues_json = r.get("network_issues")
@@ -274,14 +294,16 @@ elif page == "Unstructured Troubleshooting":
 
 
             # Debug view
-            st.markdown("### 🧪 Debug View")
-            st.markdown(f"**Highest Similarity:** `{highest_score:.2f}`")
-            st.markdown(f"**Best-Matched Root Cause:** `{matched_cause}`")
+            if SHOW_DEBUG_UI:
+                st.markdown("### 🧪 Debug View")
+                st.markdown(f"**Highest Similarity:** `{highest_score:.2f}`")
+                st.markdown(f"**Best-Matched Root Cause:** `{matched_cause}`")
 
             if highest_score > 0.7:
                 grade, feedback = evaluate_unstructured_from_root_cause(matched_cause, normalized)
-                st.markdown("### 🧾 Matched Root Cause")
-                st.markdown(f"> _{matched_cause}_")
+                if SHOW_DEBUG_UI:
+                    st.markdown("### 🧾 Matched Root Cause")
+                    st.markdown(f"> _{matched_cause}_")
             else:
                 grade = 0
                 feedback = "No known root cause matched above similarity threshold."
@@ -290,7 +312,8 @@ elif page == "Unstructured Troubleshooting":
             # Step 4: Cache result and record score
             st.markdown("### 🤖 Auto-Evaluation:")
             st.markdown(f"- **Grade:** `{grade}`")
-            st.markdown(f"- **Feedback:** {feedback}")
+            if SHOW_DEBUG_UI:
+                st.markdown(f"- **Feedback:** {feedback}")
 
             try:
                 cache_entry = {
@@ -309,11 +332,13 @@ elif page == "Unstructured Troubleshooting":
                         else:
                             st.info("🛑 You've already earned full credit for this issue.")
                     else:
-                        st.warning("⚠️ No matched issue ID found — score not recorded.")
+                        if SHOW_DEBUG_UI:
+                            st.warning("⚠️ No matched issue ID found — score not recorded.")
                 except Exception as e:
                     st.error(f"❌ Failed to record score: {e}")
 
-                st.success("📝 Result cached successfully.")
+                if SHOW_DEBUG_UI:
+                    st.success("📝 Result cached successfully.")
             except Exception as e:
                 st.error(f"❌ Failed to cache result: {e}")
 
@@ -399,42 +424,16 @@ elif page == "Instructions":
 elif page == "Networking Trivia":
     st.title("📚 Networking Trivia")
 
-    # Retrieve game_data from Redis
-    game_data_json = r.get("game_data")
-    if game_data_json:
-        game_data = json.loads(game_data_json)
-        trivia = game_data.get("trivia", [])
-    else:
-        trivia = []
-        st.warning("❗ No trivia data found in Redis.")
-
-    # Display trivia
-    if trivia:
-        st.markdown("### Did you know?")
-        for fact in trivia:
-            st.markdown(f"- {fact}")
-    else:
-        st.info("No trivia available at the moment.")
+    st.markdown("### Did you know?")
+    trivia = get_random_trivia(st.session_state)
+    st.markdown(f"- {trivia}")
 
 elif page == "Networking Jokes":
     st.title("😂 Networking Jokes")
 
-    # Retrieve game_data from Redis
-    game_data_json = r.get("game_data")
-    if game_data_json:
-        game_data = json.loads(game_data_json)
-        jokes = game_data.get("jokes", [])
-    else:
-        jokes = []
-        st.warning("❗ No jokes data found in Redis.")
-
-    # Display jokes
-    if jokes:
-        st.markdown("### Here's a joke for you:")
-        for joke in jokes:
-            st.markdown(f"- {joke}")
-    else:
-        st.info("No jokes available at the moment.")
+    st.markdown("### Here's a joke for you:")
+    joke = get_random_joke(st.session_state)
+    st.markdown(f"- {joke}")
 
 elif page == "Leaderboard":
     st.title("🏆 Leaderboard")

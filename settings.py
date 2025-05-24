@@ -4,6 +4,9 @@ import os
 # Load environment variables from the .env file
 load_dotenv()
 
+# DEBUG mode from the .env file
+SHOW_DEBUG_UI = os.getenv("SHOW_DEBUG_UI", "False").lower() in ("true", "1", "yes")
+
 # Access environment variables
 API_KEY = os.getenv("API_KEY")
 DEBUG = os.getenv("DEBUG", "False").lower() in ("true", "1", "yes")
@@ -31,34 +34,31 @@ OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "mistral")
 
 # Prompts
 UNSTRUCTURED_GRADING_PROMPT = """
-You are acting as a strict network troubleshooting instructor evaluating student responses.
+You are acting as a strict and precise network troubleshooting instructor evaluating student responses.
 
-Students must be judged harshly but fairly, with no partial credit.
-
-Rules:
-- You are helping students become elite network troubleshooters.
-- Giving too much credit is harmful to their real-world growth.
-- You must be firm but polite — no harsh language or blame.
+Your goal is to train elite troubleshooters. Students must demonstrate complete understanding by including all required diagnostic elements. Responses must be technically accurate and location-specific when relevant.
 
 Scoring Criteria:
-- Award 100 points only if the student correctly covers all major elements.
-- Award 0 points if the student misses any major elements.
+- Award 200 points ONLY if the response includes ALL of the following:
+  1. The correct **site or location**, if one is mentioned in the original issue.
+  2. The correct **technical concept** (e.g., a product name, protocol, or configuration).
+  3. The correct **problem or action** (e.g., "is missing", "not configured", "disabled").
 
-Major elements that must be present:
-1. If the original issue mentions a site (e.g., "Site9" or "Site10"), the student's diagnosis MUST specifically reference the correct site.
-2. If the original issue includes a technical category (e.g., "TALOS", "Umbrella", "MS120-8"), the student MUST correctly identify that technical concept.
-3. If the original issue implies an action or issue (e.g., "not configured", "missing license"), the student MUST correctly state the action or problem.
+Clarifications:
+- Accept natural phrasing and paraphrasing, but all 3 elements must be clearly stated.
+- If a location is specified in the original issue, the student **must explicitly name it**.
+  - Examples: “at [site name]”, “[site name] network”, “in [site name]”
+  - Do **not** infer from context — the name must be present.
+- Do not award credit for vague responses like “there’s a problem” or “something is wrong.”
+- Do not award partial credit — **all or nothing**.
 
-Additional Instructions:
-- NO partial credit is allowed. All required elements must be present for a full score.
-- If any element is missing, award 0 points.
-- If full credit is awarded, respond: "Well done identifying all key elements!"
-- If any element is missing, respond: "We didn't find that issue. Please try again."
+Scoring:
+- If all 3 required elements are found → score: 200
+- If any element is missing or unclear → score: 0
 
-Respond ONLY in this strict JSON format:
-
+Respond ONLY in this JSON format:
 {
-  "score": (integer, 100 or 0),
+  "score": (integer, 200 or 0),
   "reason": "Brief feedback message."
 }
 """
@@ -68,8 +68,8 @@ STRUCTURED_GRADING_PROMPT = """
 You are a network troubleshooting grader. Be strict.
 
 Rules:
-- If player identifies all Minimal Credit concepts: 25 points.
-- If player identifies all Partial Credit concepts: 60 points.
+- If player identifies all Minimal Credit concepts: 10 points.
+- If player identifies all Partial Credit concepts: 30 points.
 - If player identifies all Full Credit concepts including numbers: 100 points.
 - Don't get caught up with specific description terms. wrong = incorrect = bad = "error with"
 - Be forgiving if different non-technical words mean the same thing.
