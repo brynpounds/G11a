@@ -16,7 +16,6 @@ from settings import SHOW_DEBUG_UI
 from get_random_joke import get_random_joke
 from get_random_trivia import get_random_trivia
 from settings import SNARKY_MODE_DEFAULT
-from grade_response import grade_response
 
 # ✅ Initialize Redis once via redis_client.py
 r = get_redis_client()
@@ -88,7 +87,7 @@ else:
 # Navigation
 page = st.sidebar.radio(
     "🧭 Navigate",
-    ["Known Trouble Tickets", "Investigations", "Networking Trivia", "Networking Jokes", "Your Scores So Far", "Leaderboard", "Instructions"]
+    ["Known Trouble Tickets", "Unguided Troubleshooting", "Networking Trivia", "Networking Jokes", "Your Scores So Far", "Leaderboard", "Instructions"]
 )
 
 # Snarky Mode toggle
@@ -134,8 +133,6 @@ if page == "Known Trouble Tickets":
         ticket_id = selected_ticket.split(" - ")[0].strip()
         normalized = normalize_sentence(diagnosis_input)
         cache_hit = check_redis_structured_cache(ticket_id, normalized)
-
-        st.markdown(f"🔍 **Normalized Answer:** {normalized}")
 
         if SHOW_DEBUG_UI:
             st.success(f"Diagnosis submitted for ticket: {selected_ticket}")
@@ -395,65 +392,6 @@ elif page == "Unguided Troubleshooting":
                     st.success("📝 Result cached successfully.")
             except Exception as e:
                 st.error(f"❌ Failed to cache result: {e}")
-
-
-elif page == "Investigations":
-    st.title("🕵️ Investigations")
-    st.markdown("### Your manager has asked you to find out some details.  Can you track down these answers?")
-
-    from grade_response import grade_response  # ✅ Import your grading logic
-
-    # Load available investigations
-    investigation_keys = r.keys("investigation:*:question")
-    investigations = []
-
-    for key in investigation_keys:
-        try:
-            key_str = key  # Already str in decode-responses mode
-            parts = key_str.split(":")
-            inv_id = parts[1]
-            question = r.get(f"investigation:{inv_id}:question")
-            answer = r.get(f"investigation:{inv_id}:answer")
-
-            if question and answer:
-                investigations.append((inv_id, question))
-        except Exception:
-            continue  # Skip malformed keys
-
-    # Filter out ones already solved by the user
-    unsolved = []
-    for inv_id, desc in investigations:
-        solved_key = f"user:{USER_EMAIL}:investigation:{inv_id}"
-        if not r.exists(solved_key):
-            unsolved.append((inv_id, desc))
-
-    if not unsolved:
-        st.success("🎉 You've completed all investigations!")
-        st.stop()
-
-    # Let user pick an unsolved investigation
-    selected = st.selectbox("Select an investigation", [f"{i} - {d}" for i, d in unsolved])
-    selected_id = selected.split(" - ")[0]
-
-    with st.form(key="investigation_form", clear_on_submit=True):
-        player_input = st.text_input("🔍 What's the root cause?")
-        submitted = st.form_submit_button("Submit", use_container_width=True)
-
-    if submitted:
-        result = grade_response(selected_id, player_input)
-        if "error" in result:
-            st.error(f"❌ {result['error']}")
-        else:
-            st.markdown(f"### 📊 Similarity Score: `{result['similarity']}`")
-            st.markdown(f"- Your answer: _{result['normalized_input']}_")
-
-            if result["correct"]:
-                st.success("✅ Correct! You earned 50 points.")
-                r.set(f"user:{USER_EMAIL}:investigation:{selected_id}", 1)
-                record_player_score(USER_EMAIL, f"investigation:{selected_id}", 50)
-            else:
-                st.warning("❌ Not close enough. Try again!")
-
 
 
 # Your Scores So Far
