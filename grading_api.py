@@ -1,15 +1,17 @@
 # grading_api.py
 
-from get_random_joke import get_random_joke
-from get_random_trivia import get_random_trivia
-from load_game import load_trouble_tickets
-from preload_answers import load_yaml_files
-from write_to_structured_cache import write_structured_entry_to_cache
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 import requests
 import json
 import time
+import re
+
+from get_random_joke import get_random_joke
+from get_random_trivia import get_random_trivia
+from load_game import load_trouble_tickets
+from preload_answers import load_yaml_files
+from write_to_structured_cache import write_structured_entry_to_cache
 from influxdb_client import InfluxDBClient, Point
 from influxdb_client.client.write_api import SYNCHRONOUS
 from settings import (
@@ -19,6 +21,10 @@ from settings import (
     UNSTRUCTURED_GRADING_PROMPT
 )
 from redis_client import get_redis_client
+
+app = FastAPI()
+
+# ==== MODELS ====
 
 class TroubleTicket(BaseModel):
     id: int
@@ -30,14 +36,6 @@ class TroubleTicket(BaseModel):
 
 class TicketID(BaseModel):
     id: int
-
-app = FastAPI()
-
-# InfluxDB setup
-client = InfluxDBClient(url=INFLUX_URL, token=INFLUX_TOKEN, org=INFLUX_ORG)
-write_api = client.write_api(write_options=SYNCHRONOUS)
-
-### ==== MODELS ====
 
 class StructuredGradeRequest(BaseModel):
     player_response: str
@@ -59,7 +57,31 @@ class StructuredCacheEntry(BaseModel):
     grade: int
     feedback: str
 
-### ==== ENDPOINTS ====
+class NormalizeRequest(BaseModel):
+    sentence: str
+
+# ==== NORMALIZATION ====
+
+@app.post("/normalize")
+def normalize_text(request: NormalizeRequest):
+    r = get_redis_client()
+    sentence = request.sentence
+    output = sentence
+
+    all_synonyms = r.hkeys("acronym_cache")
+    all_synonyms.sort(key=lambda s: -len(s))  # Longest match first
+
+    for synonym in all_synonyms:
+        pattern = r'\b' + re.escape(synonym) + r'\b'
+        match = re.search(pattern, output, flags=re.IGNORECASE)
+        if match:
+            canonical = r.hget("acronym_cache", synonym)
+            if canonical:
+                output = re.sub(pattern, canonical, output, flags=re.IGNORECASE)
+
+    return {"normalized": output}
+
+# ==== ENDPOINTS ====
 
 @app.get("/random_joke")
 def random_joke():
@@ -70,7 +92,6 @@ def random_joke():
 def random_trivia():
     trivia = get_random_trivia()
     return {"trivia": trivia}
-
 
 @app.post("/load_trouble_tickets")
 def load_trouble_tickets_endpoint():
@@ -125,8 +146,8 @@ Give your Grade and Feedback in this JSON format:
     response = requests.post(OLLAMA_URL, json=payload)
     duration = time.perf_counter() - start
 
-    # Log to InfluxDB
     point = Point("llm_structured_response").field("duration", duration)
+    write_api = InfluxDBClient(url=INFLUX_URL, token=INFLUX_TOKEN, org=INFLUX_ORG).write_api(write_options=SYNCHRONOUS)
     write_api.write(bucket=INFLUX_BUCKET, org=INFLUX_ORG, record=point)
 
     try:
@@ -160,8 +181,8 @@ Student Diagnosis Summary:
     response = requests.post(OLLAMA_URL, json=payload)
     duration = time.perf_counter() - start
 
-    # Log to InfluxDB
     point = Point("llm_unstructured_response").field("duration", duration)
+    write_api = InfluxDBClient(url=INFLUX_URL, token=INFLUX_TOKEN, org=INFLUX_ORG).write_api(write_options=SYNCHRONOUS)
     write_api.write(bucket=INFLUX_BUCKET, org=INFLUX_ORG, record=point)
 
     try:
@@ -221,7 +242,6 @@ def list_all_tickets():
 def add_unstructured_ticket(ticket: UnstructuredTicket):
     r = get_redis_client()
 
-    # Save to array
     raw = r.get("network_issues")
     issues = json.loads(raw) if raw else []
 
@@ -230,8 +250,6 @@ def add_unstructured_ticket(ticket: UnstructuredTicket):
 
     issues.append(ticket.dict())
     r.set("network_issues", json.dumps(issues))
-
-    # Save individual key
     r.set(f"issue:{ticket.id}", json.dumps(ticket.dict()))
 
     return {"message": f"✅ Unstructured ticket ID {ticket.id} added."}
@@ -239,11 +257,8 @@ def add_unstructured_ticket(ticket: UnstructuredTicket):
 @app.post("/remove_unstructured_ticket")
 def remove_unstructured_ticket(ticket_id: TicketID):
     r = get_redis_client()
-
-    # Delete individual key
     r.delete(f"issue:{ticket_id.id}")
 
-    # Remove from array
     raw = r.get("network_issues")
     if not raw:
         raise HTTPException(status_code=404, detail="No unstructured tickets found.")
@@ -256,5 +271,4 @@ def remove_unstructured_ticket(ticket_id: TicketID):
 
     r.set("network_issues", json.dumps(filtered))
     return {"message": f"✅ Unstructured ticket ID {ticket_id.id} removed."}
-
 
